@@ -17,7 +17,7 @@
           <h2>Pusat Akun</h2>
           <p>Semua perubahan yang dibuat <br>
             di sini akan mengubah data di <br>
-            akun kamu</p>
+            akun kamu.</p>
         </div>
         <div class="main-content">
           <div class="profile-section">
