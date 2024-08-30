@@ -1,6 +1,6 @@
 <?php
 include '../../config/session.php';
-include '../../config/account.php';
+include '../../config/readaccount.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +36,7 @@ include '../../config/account.php';
                     </div>
                 </div>
                 <div class="profile-details">
-                    <p><strong>Nama lengkap:</strong> <?= $data['Name']; ?></p>
+                    <p><strong>Nama lengkap:</strong> <?= $data['Fullname']; ?></p>
                     <p><strong>Nomor HP:</strong> <?= $data['Nohp']; ?></p>
                     <p><strong>Email:</strong> <?= $data['Email']; ?></p>
                     <p><strong>Tanggal lahir:</strong> <?= $data['Date']; ?></p>

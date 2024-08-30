@@ -13,5 +13,8 @@ foreach ($data as $key => $value) {
     }
 }
 
-
-function UpdateAccount($data) {}
+if ($data['Nohp'] == '(empty)') {
+    $statusHp = 'Silahkan Tambahkan Nomor HP dan Verifikasi';
+} else {
+    $statusHp = 'Sudah diverifikasi';
+}

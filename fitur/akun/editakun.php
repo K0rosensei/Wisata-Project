@@ -1,6 +1,6 @@
 <?php
 include '../../config/session.php';
-include '../../config/account.php';
+include '../../config/readaccount.php';
 ?>
 
 
@@ -12,6 +12,8 @@ include '../../config/account.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homestay Jein</title>
     <link rel="stylesheet" href="editakun.css" />
+    <script src="../../js/account.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
 <body>
@@ -35,15 +37,17 @@ include '../../config/account.php';
                 <h3>Masukkan Kata Sandi Saat Ini</h3>
                 <div class="input-group">
                     <label for="full-name">Nama lengkap</label>
-                    <input type="text" id="full-name" value="<?= $data['Name']; ?>">
-                    <button class="edit-button"><img src="/bahoitourismv2/asset/icon3/edit.png" alt=""></button>
+                    <input type="text" id="full-name" value="<?= $data['Fullname']; ?>" disabled>
+                    <input type="hidden" id="user" value="<?= $_SESSION['username']; ?>">
+                    <button class="edit-button" onclick="getName()"><img src="/bahoitourismv2/asset/icon3/edit.png"
+                            alt=""></button>
                 </div>
                 <div class="input-group">
                     <label for="birth-date">Tanggal lahir</label>
                     <input type="date" id="birth-date"
                         value="<?= isset($data['Date']) ? date('Y-m-d', strtotime($data['Date'])) : ''; ?>">
-                    <button class="edit-button"><img src="/bahoitourismv2/asset/icon3/GoogleCalendar.png"
-                            alt=""></button>
+                    <button class="edit-button" onclick="getDate()"><img
+                            src="/bahoitourismv2/asset/icon3/GoogleCalendar.png" alt=""></button>
                 </div>
                 <div class="input-group">
                     <label for="dropdown">Pilih opsi:</label>
@@ -54,26 +58,27 @@ include '../../config/account.php';
                         <option value="perempuan" <?= $data['Gender'] === 'perempuan' ? 'selected' : ''; ?>>Perempuan
                         </option>
                     </select>
-                    <button class="edit-button"><img src="/bahoitourismv2/asset/icon3/ChevronLeft.png" alt=""></button>
+                    <button class="edit-button" onclick="getGender()"><img
+                            src="/bahoitourismv2/asset/icon3/ChevronLeft.png" alt=""></button>
                 </div>
             </div>
             <div class="contact-info">
                 <h3>Nomor HP dan Email</h3>
                 <div class="info-item">
                     <div class="info-content">
-                        <p>+62 821 9669 8282</p>
+                        <p><?= $data['Nohp']; ?></p>
                         <span class="verification-status"><img src="/bahoitourismv2/asset/icon3/Approval.png"
-                                alt="Verified"> Sudah diverifikasi</span>
+                                alt="Verified"> <?= $statusHp ?></span>
                     </div>
-                    <button class="edit-button">Ubah</button>
+                    <button class="edit-button" onclick="getNumber()">Ubah</button>
                 </div>
                 <div class="info-item">
                     <div class="info-content">
-                        <p>siscomamahi@gmail.com</p>
+                        <p><?= $data['Email']; ?></p>
                         <span class="verification-status"><img src="/bahoitourismv2/asset/icon3/Approval.png"
                                 alt="Verified"> Sudah diverifikasi</span>
                     </div>
-                    <button class="edit-button">Ubah</button>
+                    <button class="edit-button" onclick="getEmail()">Ubah</button>
                 </div>
             </div>
         </div>
@@ -81,6 +86,8 @@ include '../../config/account.php';
     <footer>
         <p>© 2024. Seluruh hak cipta dilindungi undang - undang</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </script>
 </body>
 
 </html>
