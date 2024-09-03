@@ -13,6 +13,7 @@ include '../../config/readaccount.php';
     <title>Homestay Jein</title>
     <link rel="stylesheet" href="editakun.css" />
     <script src="../../js/account.js"></script>
+    <script src="../../js/otp.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
@@ -87,6 +88,9 @@ include '../../config/readaccount.php';
         <p>© 2024. Seluruh hak cipta dilindungi undang - undang</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+    emailjs.init('YOUR SERVICE ID');
     </script>
 </body>
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 // mengecek admin login atau tidak
 if (isset($_SESSION['token'])) {
@@ -7,4 +7,3 @@ if (isset($_SESSION['token'])) {
     // var_dump($_SESSION['token']);
     return false;
 }
-?>

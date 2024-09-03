@@ -2,6 +2,7 @@
 include 'config.php';
 
 
+
 $username = $_SESSION['username'];
 $select = "SELECT * FROM user WHERE Username = '$username'";
 $query = mysqli_query($conn, $select);

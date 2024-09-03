@@ -11,23 +11,6 @@ function showAlert(icon, title, text, reload = false) {
   });
 }
 
-function getOTP() {
-  return Math.floor(100000 + Math.random() * 900000);
-}
-
-function sendOTP(number) {
-  const msg = getOTP();
-  const key = fetch('https://textbelt.com/text', {
-    // Ganti URL dengan endpoint server kamu
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ number, msg, key }),
-  })
-    .then((response) => response.text())
-    .then((data) => (document.getElementById('responseMessage').innerText = `Response: ${data}`))
-    .catch((error) => (document.getElementById('responseMessage').innerText = `Error: ${error}`));
-}
-
 function getName() {
   Swal.fire({
     title: 'Nama Lengkap',
@@ -123,88 +106,45 @@ function getGender() {
     });
 }
 
-function getNumber() {
-  Swal.fire({
-    title: 'Masukkan Nomor Baru',
-    html: `<input id="swal-input1" class="swal2-input" placeholder="+62....">`,
-    focusConfirm: false,
-    preConfirm: () => {
-      const number = Swal.getPopup().querySelector('#swal-input1').value;
+// function getEmail() {
+//   Swal.fire({
+//     title: 'Masukkan Email Baru',
+//     html: `<input type="email" id="swal-input1" class="swal2-input" placeholder="example@....">`,
+//     focusConfirm: false,
+//     preConfirm: () => {
+//       const email = Swal.getPopup().querySelector('#swal-input1').value;
 
-      if (!number) {
-        Swal.showValidationMessage(`Silahkan Isi Nomor Baru Anda`);
-        return false; // Menandakan bahwa validasi gagal
-      }
+//       if (!email) {
+//         Swal.showValidationMessage(`Silahkan Isi Email Baru Anda`);
+//         return false; // Menandakan bahwa validasi gagal
+//       }
 
-      // Mengirim data ke server menggunakan fetch
-      //   return sendOTP(number);
+//       // Mengirim data ke server menggunakan fetch
+//       //   return sendOTP(number);
 
-      // Input ke database
-      return fetch('../../config/acountSetting.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          number: number,
-          user: user,
-        }),
-      })
-        .then((response) => response.text())
-        .then((responseText) => {
-          // Menangani respons dari server
-          if (responseText.includes('Berhasil')) {
-            showAlert('success', 'Sukses!', 'Nomor berhasil diperbarui.', true);
-          } else {
-            showAlert('error', 'Gagal!', 'Terjadi kesalahan: ' + responseText);
-          }
-        })
-        .catch((error) => {
-          Swal.fire('Gagal!', 'Terjadi kesalahan: ' + error.message, 'error');
-        });
-    },
-  });
-}
-
-function getEmail() {
-  Swal.fire({
-    title: 'Masukkan Email Baru',
-    html: `<input type="email" id="swal-input1" class="swal2-input" placeholder="example@....">`,
-    focusConfirm: false,
-    preConfirm: () => {
-      const email = Swal.getPopup().querySelector('#swal-input1').value;
-
-      if (!email) {
-        Swal.showValidationMessage(`Silahkan Isi Email Baru Anda`);
-        return false; // Menandakan bahwa validasi gagal
-      }
-
-      // Mengirim data ke server menggunakan fetch
-      //   return sendOTP(number);
-
-      // Input ke database
-      return fetch('../../config/acountSetting.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          email: email,
-          user: user,
-        }),
-      })
-        .then((response) => response.text())
-        .then((responseText) => {
-          // Menangani respons dari server
-          if (responseText.includes('Berhasil')) {
-            showAlert('success', 'Sukses!', 'Nomor berhasil diperbarui.', true);
-          } else {
-            showAlert('error', 'Gagal!', 'Terjadi kesalahan: ' + responseText);
-          }
-        })
-        .catch((error) => {
-          Swal.fire('Gagal!', 'Terjadi kesalahan: ' + error.message, 'error');
-        });
-    },
-  });
-}
+//       // Input ke database
+//       return fetch('../../config/acountSetting.php', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/x-www-form-urlencoded',
+//         },
+//         body: new URLSearchParams({
+//           email: email,
+//           user: user,
+//         }),
+//       })
+//         .then((response) => response.text())
+//         .then((responseText) => {
+//           // Menangani respons dari server
+//           if (responseText.includes('Berhasil')) {
+//             showAlert('success', 'Sukses!', 'Nomor berhasil diperbarui.', true);
+//           } else {
+//             showAlert('error', 'Gagal!', 'Terjadi kesalahan: ' + responseText);
+//           }
+//         })
+//         .catch((error) => {
+//           Swal.fire('Gagal!', 'Terjadi kesalahan: ' + error.message, 'error');
+//         });
+//     },
+//   });
+// }
