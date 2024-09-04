@@ -3,6 +3,7 @@ include '../../config/session.php';
 if (!empty($username)) {
 
     include '../../config/readaccount.php';
+    include '../../config/getallhs.php';
 }
 ?>
 
@@ -131,10 +132,12 @@ if (!empty($username)) {
     </div>
     <div class="container">
         <h1>Semua Homestay</h1>
+        <?php while ($data_hs = mysqli_fetch_assoc($query)) {
+        ?>
         <div class="homestay-grid">
             <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Amelia1.png" alt="Homestay Amelia" />
-                <h3>Homestay Amelia</h3>
+                <img src="<?= $data_hs['Foto1'] ?>" alt="<?= $data_hs['Nama'] ?>" />
+                <h3><?= $data_hs['Nama'] ?></h3>
                 <p>Sudah termasuk sarapan</p>
                 <div class="info">
                     <div class="rating">
@@ -143,171 +146,12 @@ if (!empty($username)) {
                     </div>
                     <div class="details">
                         <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
+                        <p class="price">Rp. <?= $data_hs['Harga'] ?> /Malam /Org</p>
                     </div>
                 </div>
-                <a href="detail.php?id=11"><button>Pesan Sekarang</button></a>
+                <a href="detail.php?id=<?= $data_hs['Id'] ?>"><button>Pesan Sekarang</button></a>
             </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Enjelo1.png" alt="Homestay Enjelo" />
-                <h3>Homestay Enjelo</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=10"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Josua1.png" alt="Homestay Josua All" />
-                <h3>Homestay Josua All</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=9"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Revi1.png" alt="Homestay Revi" />
-                <h3>Homestay Revi</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=5"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Sally1.png" alt="Homestay Sally" />
-                <h3>Homestay Sally</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 8-10 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=6"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Defandro1.png" alt="Homestay Defandro" />
-                <h3>Homestay Defandro</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=8"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Marina1.png" alt="Homestay Marina" />
-                <h3>Homestay Marina</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=4"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Jein1.png" alt="Homestay Jein" />
-                <h3>Homestay Jein</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=2"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Renata1.png" alt="Homestay Renata" />
-                <h3>Homestay Renata</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=7"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Aget1.png" alt="Homestay Aget" />
-                <h3>Homestay Aget</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=1"><button>Pesan Sekarang</button></a>
-            </div>
-            <div class="homestay-card">
-                <img src="/bahoitourismv2/asset/homestay/Karisa1.png" alt="Homestay Karisa" />
-                <h3>Homestay Karisa</h3>
-                <p>Sudah termasuk sarapan</p>
-                <div class="info">
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span>(4 Review)</span>
-                    </div>
-                    <div class="details">
-                        <p>Maksimal 2 Orang</p>
-                        <p class="price">Rp. 150.000 /Malam /Org</p>
-                    </div>
-                </div>
-                <a href="detail.php?id=3"><button>Pesan Sekarang</button></a>
-            </div>
+            <?php } ?>
         </div>
     </div>
     <footer>

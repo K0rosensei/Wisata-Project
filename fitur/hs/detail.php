@@ -1,6 +1,13 @@
 <?php
 include '../../config/session.php';
 include '../../config/getdatahs.php';
+$nama = $data['Nama'];
+$foto1 = $data['Foto1'];
+$foto2 = $data['Foto2'];
+$foto3 = $data['Foto3'];
+include '../../config/readaccount.php';
+$fullname = $data['Fullname'];
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +48,7 @@ include '../../config/getdatahs.php';
             </li>
             <li id="usernameDisplay" class="username">
                 <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
-                <span class="user-name"><?= $username ?></span>
+                <span class="user-name"><?= $fullname; ?></span>
             </li>
             <?php
             }
@@ -114,18 +121,19 @@ include '../../config/getdatahs.php';
 
 <div class="container">
     <div class="images">
-        <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto1'] ?>" alt="Homestay Jein" class="main-image" />
+        <img src="/bahoitourismv2/asset/homestay/<?= $foto1 ?>" alt="Homestay Jein" class="main-image" />
         <div class="thumbnail-images">
-            <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto2'] ?? 'notfound.png' ?>" alt="Bedroom 1"
+            <img src="/bahoitourismv2/asset/homestay/<?= $foto2 ?? 'notfound.png' ?>" alt="Bedroom 1"
                 class="thumbnail" />
-            <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto3'] ?? 'notfound.png' ?>" alt="Bedroom 2"
+            <img src="/bahoitourismv2/asset/homestay/<?= $foto3 ?? 'notfound.png' ?>" alt="Bedroom 2"
                 class="thumbnail" />
         </div>
     </div>
     <div class="info">
         <div class="left">
-            <h1><?= $data['Nama'] ?></h1>
-            <input type="hidden" id="nama" value="<?= $data['Nama'] ?>">
+            <h1><?= $nama ?></h1>
+            <input type="hidden" id="nama" value="<?= $nama ?>">
+            <input type="hidden" id="id_user" value="<?= $id_user ?>">
             <div class="rating-container">
                 <span class="stars">
                     <?php
@@ -320,6 +328,8 @@ include '../../config/getdatahs.php';
 <script src="/bahoitourismv2/js/js.js"></script>
 <script src="../../js/paymentSeting.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/v1/transactions"
+    data-client-key="SET_YOUR_CLIENT_KEY_HERE"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const cekharga = document.getElementById("cekharga");
@@ -333,8 +343,8 @@ document.addEventListener("DOMContentLoaded", function() {
         <?php
             } else {
             ?>
-        // getPayment();
-        window.location.href = '../pesan/pemesanan.php';
+        getPayment();
+        // window.location.href = '../pesan/pemesanan.php';
         <?php
             }
             ?>

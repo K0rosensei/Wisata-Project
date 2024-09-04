@@ -29,31 +29,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Simpan token dan username di sesi
             $_SESSION['token'] = $token;
             $_SESSION['username'] = $row['Username'];
+            $_SESSION['id'] = $row['Id'];
 ?>
-            <script>
-                window.history.back();
-            </script>
-        <?php
+<script>
+window.history.back();
+</script>
+<?php
             // Kirim respons JSON
             echo json_encode(['token' => $token, 'username' => $row['Username']]);
         } else {
             // Password tidak cocok
             // echo json_encode(['error' => 'Invalid email or password']);
         ?>
-            <script>
-                alert('Invalid email or password')
-                window.history.back();
-            </script>
-        <?php
+<script>
+alert('Invalid email or password')
+window.history.back();
+</script>
+<?php
         }
     } else {
         // Email tidak ditemukan
         // echo json_encode(['error' => 'Invalid email or password']);
         ?>
-        <script>
-            alert('Invalid email or password')
-            window.history.back();
-        </script>
+<script>
+alert('Invalid email or password')
+window.history.back();
+</script>
 <?php
     }
 }
