@@ -8,8 +8,7 @@ namespace Midtrans;
 require_once dirname(__FILE__) . '/../../Midtrans.php';
 // Set Your server key
 // can find in Merchant Portal -> Settings -> Access keys
-// SB-Mid-server-QpvuaAyAiWPZyw-GBHqLCLZw
-// SB-Mid-client-6B87rlZqDkZdpvGR
+
 Config::$serverKey = '<Your Server Key>';
 Config::$clientKey = '<Your Client Key>';
 
@@ -135,82 +134,82 @@ function printExampleWarningMessage()
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script type="text/javascript">
-    document.getElementById('pay-button').onclick = function() {
-        // SnapToken acquired from previous step
-        snap.pay('<?php echo $snap_token ?>', {
-            // Optional
-            onSuccess: function(result) {
-                /* You may add your own js here, this is just example */
-                var resultJson = JSON.parse(JSON.stringify(result));
+        document.getElementById('pay-button').onclick = function() {
+            // SnapToken acquired from previous step
+            snap.pay('<?php echo $snap_token ?>', {
+                // Optional
+                onSuccess: function(result) {
+                    /* You may add your own js here, this is just example */
+                    var resultJson = JSON.parse(JSON.stringify(result));
 
-                // Extract transaction_id and transaction_status
-                var transactionId = resultJson.transaction_id;
-                var transactionStatus = resultJson.transaction_status;
-                statusPayment(transactionId, transactionStatus);
-                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    // Extract transaction_id and transaction_status
+                    var transactionId = resultJson.transaction_id;
+                    var transactionStatus = resultJson.transaction_status;
+                    statusPayment(transactionId, transactionStatus);
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
 
-                function statusPayment(id, status) {
-                    fetch('../../../config/payment.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: new URLSearchParams({
-                                status: status,
-                                id: id,
-                            }),
-                        })
-                        .then((response) => response.text())
-                        .then((responseText) => {
-                            // Assuming responseText is 'success' or 'error'
-                            if (responseText === 'success') {
-                                // Display success alert
-                                Swal.fire({
-                                    title: 'Pembayaran Berhasil!',
-                                    text: 'Pembayaran Anda berhasil diproses.',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK',
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        // Go back to the previous page
-                                        window.location.href =
-                                            '../../../fitur/hs/detail.php';
-                                    }
-                                });
-                            } else {
-                                // Handle error
+                    function statusPayment(id, status) {
+                        fetch('../../../config/payment.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: new URLSearchParams({
+                                    status: status,
+                                    id: id,
+                                }),
+                            })
+                            .then((response) => response.text())
+                            .then((responseText) => {
+                                // Assuming responseText is 'success' or 'error'
+                                if (responseText === 'success') {
+                                    // Display success alert
+                                    Swal.fire({
+                                        title: 'Pembayaran Berhasil!',
+                                        text: 'Pembayaran Anda berhasil diproses.',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Go back to the previous page
+                                            window.location.href =
+                                                '../../../fitur/hs/detail.php';
+                                        }
+                                    });
+                                } else {
+                                    // Handle error
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Terjadi kesalahan saat memproses pembayaran.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK',
+                                    });
+                                }
+                            })
+                            .catch((error) => {
+                                // Handle fetch error
                                 Swal.fire({
                                     title: 'Gagal!',
-                                    text: 'Terjadi kesalahan saat memproses pembayaran.',
+                                    text: 'Terjadi kesalahan: ' + error.message,
                                     icon: 'error',
                                     confirmButtonText: 'OK',
                                 });
-                            }
-                        })
-                        .catch((error) => {
-                            // Handle fetch error
-                            Swal.fire({
-                                title: 'Gagal!',
-                                text: 'Terjadi kesalahan: ' + error.message,
-                                icon: 'error',
-                                confirmButtonText: 'OK',
                             });
-                        });
-                }
+                    }
 
-            },
-            // Optional
-            onPending: function(result) {
-                /* You may add your own js here, this is just example */
-                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            },
-            // Optional
-            onError: function(result) {
-                /* You may add your own js here, this is just example */
-                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            }
-        });
-    };
+                },
+                // Optional
+                onPending: function(result) {
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                },
+                // Optional
+                onError: function(result) {
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                }
+            });
+        };
     </script>
 </body>
 
