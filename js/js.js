@@ -153,3 +153,4 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("loginPopup").style.display = "block";
   });
 });
+

@@ -32,6 +32,26 @@ $dataavarage = mysqli_fetch_assoc($resultavarage);
 $starsRating = round($dataavarage['avgrating']);
 // var_dump($dataavarage);
 
+$penukarantiket = "SELECT Pentik FROM homestay WHERE Id = $id";
+$resultpenukarantiket = mysqli_query($conn, $penukarantiket);
+$datapenukarantiket = mysqli_fetch_assoc($resultpenukarantiket);
+// var_dump($datapenukarantiket);
+
+$syaratketentuan = "SELECT SnK FROM homestay WHERE Id = $id";
+$resultsyaratketentuan = mysqli_query($conn, $syaratketentuan);
+$datasyaratketentuan = mysqli_fetch_assoc($resultsyaratketentuan);
+// var_dump($datasyaratketentuan);
+
+$informasitambahan = "SELECT Infotambahan FROM homestay WHERE Id = $id";
+$resultinformasitambahan = mysqli_query($conn, $informasitambahan);
+$datainformasitambahan = mysqli_fetch_assoc($resultinformasitambahan);
+// var_dump($datainformasitambahan);
+
+$fasilitas = "SELECT Fasilitas FROM homestay WHERE Id = $id";
+$resultfasilitas = mysqli_query($conn, $fasilitas);
+$datafasilitas = mysqli_fetch_assoc($resultfasilitas);
+// var_dump($datafasilitas);
+
 $avgdecimal = round($dataavarage['avgrating'], 1);
 // var_dump($avgdecimal);
 

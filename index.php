@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'config/session.php';
 ?>
 
@@ -24,28 +24,28 @@ include 'config/session.php';
         <li class="center"><a href="config/logout.php">Kontak</a></li>
         <li class="spacer"></li>
         <?php
-        if (empty($token)){
-        ?>
-        <li id="loginButton" class="button">
-          <button id="showLoginBtn" class="masuk">
-            <img src="asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
-          </button>
-        </li>
-        <li id="registerButton" class="button">
-          <button id="showRegisterBtn" class="daftar">Daftar</button>
-        </li>
-        <?php
-        }else{
-        ?>
-        <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
-        </li>
-        <li id="usernameDisplay" class="username">
-          <a href="fitur/akun/akunsaya.php">
-            <img src="asset/icon1/User.png" alt="User Icon" class="user-icon" />
-            <span class="user-name"><?= $username ?></span>
-          </a>
-        </li>
-        <?php
+        if (empty($token)) {
+          ?>
+          <li id="loginButton" class="button">
+            <button id="showLoginBtn" class="masuk">
+              <img src="asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
+            </button>
+          </li>
+          <li id="registerButton" class="button">
+            <button id="showRegisterBtn" class="daftar">Daftar</button>
+          </li>
+          <?php
+        } else {
+          ?>
+          <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
+          </li>
+          <li id="usernameDisplay" class="username">
+            <a href="fitur/akun/akunsaya.php">
+              <img src="asset/icon1/User.png" alt="User Icon" class="user-icon" />
+              <span class="user-name"><?= $username ?></span>
+            </a>
+          </li>
+          <?php
         }
         ?>
       </ul>
@@ -179,7 +179,7 @@ include 'config/session.php';
             <p class="price">Rp. 150.000 /Malam /Org</p>
           </div>
         </div>
-        <a href="fitur/hs/list/aget.php"><button>Pesan Sekarang</button></a>
+        <a href="fitur/hs/detail.php?id=1"><button>Pesan Sekarang</button></a>
       </div>
       <div class="homestay-card">
         <img src="asset/homestay/Karisa1.png" alt="Homestay Karisa" />
@@ -195,7 +195,7 @@ include 'config/session.php';
             <p class="price">Rp. 150.000 /Malam /Org</p>
           </div>
         </div>
-        <a href="fitur/hs/list/karisa.php"><button>Pesan Sekarang</button></a>
+        <a href="fitur/hs/detail.php?id=3"><button>Pesan Sekarang</button></a>
       </div>
       <div class="homestay-card">
         <img src="asset/homestay/Sally1.png" alt="Homestay Sally" />
@@ -211,7 +211,7 @@ include 'config/session.php';
             <p class="price">Rp. 150.000 /Malam /Org</p>
           </div>
         </div>
-        <a href="fitur/hs/list/sally.php"><button>Pesan Sekarang</button></a>
+        <a href="fitur/hs/detail.php?id=6"><button>Pesan Sekarang</button></a>
       </div>
     </div>
     <div class="view-all">
@@ -254,8 +254,9 @@ include 'config/session.php';
 
   <div class="location-map">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4481621380357!2d106.80161381533532!3d-6.230364995483137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f430f0c192f5%3A0x50ef6a9a7c11d81!2sMonumen%20Nasional!5e0!3m2!1sen!2sid!4v1627403989750!5m2!1sen!2sid"
-      width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy"></iframe>
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8540.987556656964!2d125.0123935377705!3d1.7209034284464684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3287b9c99f133b2b%3A0xe42b6e3af1c2237a!2sBahoi%2C%20Kec.%20Likupang%20Bar.%2C%20Kabupaten%20Minahasa%20Utara%2C%20Sulawesi%20Utara!5e0!3m2!1sid!2sid!4v1724567597955!5m2!1sid!2sid"
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 
   <footer>

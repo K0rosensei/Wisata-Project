@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Simpan token dan username di sesi
             $_SESSION['token'] = $token;
             $_SESSION['username'] = $row['Username'];
+            $_SESSION['iduser'] = $row['Id'];
             ?>
             <script>
                 window.history.back();

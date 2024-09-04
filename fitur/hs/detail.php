@@ -193,9 +193,7 @@ include '../../config/getdatahs.php';
                 <img src="/bahoitourismv2/asset/icon2/GivingTickets.png" alt="Ticket Icon" class="icon" />
                 Penukaran Tiket
             </h3>
-            <ul>
-                <li>Lokasi: Rumah dari Jeceline Dalero, Bahoi Jaga III</li>
-            </ul>
+            <?= $datapenukarantiket['Pentik'] ?>
         </div>
         <hr class="line" />
         <div class="section">
@@ -203,30 +201,7 @@ include '../../config/getdatahs.php';
                 <img src="/bahoitourismv2/asset/icon2/OrderCompleted.png" alt="Info Icon" class="icon" />
                 Syarat & Ketentuan
             </h3>
-            <h4>Umum</h4>
-            <ul>
-                <li>Harga termasuk pajak.</li>
-                <li>
-                    Tiket yang sudah dibeli bisa dicancel apabila memenuhi
-                    persyaratan.
-                </li>
-                <li>
-                    Pelanggan harus mengisi data pribadi dengan benar saat membuat
-                    booking. Jika data pribadi yang diberikan salah, maka e-tiket
-                    tidak akan dapat diterima.
-                </li>
-                <li>
-                    Penjualan tiket dapat dimulai atau dihentikan kapan pun oleh
-                    bahoitourism dengan mengikuti kebijakan dari pengelola wisata.
-                </li>
-            </ul>
-            <h4>E-Tiket</h4>
-            <ul>
-                <li>
-                    E-tiket tidak dapat ditukar dengan uang, baik sebagian maupun
-                    seluruhnya.
-                </li>
-            </ul>
+            <?= $datasyaratketentuan['SnK'] ?>
         </div>
         <hr class="line" />
         <div class="section">
@@ -234,30 +209,13 @@ include '../../config/getdatahs.php';
                 <img src="/bahoitourismv2/asset/icon2/About.png" alt="Warning Icon" class="icon" />
                 Informasi Tambahan
             </h3>
-            <ul>
-                <li>
-                    Akan dikenakan denda apabila merusak/membawa pulang barang dari
-                    homestay.
-                </li>
-                <li>Anak umur 3 tahun ke atas dihitung dewasa dalam pembayaran.</li>
-            </ul>
+            <?= $datainformasitambahan['Infotambahan'] ?>
         </div>
         <hr class="line" />
         <div class="section">
             <h5>Fasilitas</h5>
             <div class="facilities">
-                <div class="facility-item">
-                    <img src="/bahoitourismv2/asset/icon2/Parking.png" alt="Parking Icon" class="icon" />
-                    <span>Parkir</span>
-                </div>
-                <div class="facility-item">
-                    <img src="/bahoitourismv2/asset/icon2/Noodles.png" alt="Breakfast Icon" class="icon" />
-                    <span>Sarapan</span>
-                </div>
-                <div class="facility-item">
-                    <img src="/bahoitourismv2/asset/icon2/Toilet.png" alt="Toilet Icon" class="icon" />
-                    <span>Toilet/WC/Kamar Mandi</span>
-                </div>
+                <?= $datafasilitas['Fasilitas'] ?>
             </div>
         </div>
     </div>
