@@ -7,7 +7,7 @@ namespace Midtrans;
 
 require_once dirname(__FILE__) . '/../Midtrans.php';
 Config::$isProduction = false;
-Config::$serverKey = 'SB-Mid-server-QpvuaAyAiWPZyw-GBHqLCLZw';
+Config::$serverKey = 'Your Server Key';
 
 // non-relevant function only used for demo/example purpose
 printExampleWarningMessage();
