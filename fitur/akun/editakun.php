@@ -1,6 +1,11 @@
 <?php
 include '../../config/session.php';
-include '../../config/readaccount.php';
+if (!empty($username)) {
+    include '../../config/readaccount.php';
+} else {
+    header("Location: ../../index.php");
+    exit();
+}
 ?>
 
 
@@ -90,7 +95,7 @@ include '../../config/readaccount.php';
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-    emailjs.init('YOUR SERVICE ID');
+    emailjs.init('CEooNcSQXHzVehS8d');
     </script>
 </body>
 

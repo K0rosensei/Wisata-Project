@@ -1,6 +1,11 @@
 <?php
 include '../../config/session.php';
-include '../../config/readaccount.php';
+if (!empty($username)) {
+    include '../../config/readaccount.php';
+} else {
+    header("Location: ../../index.php");
+    exit();
+}
 ?>
 
 
@@ -67,7 +72,8 @@ include '../../config/readaccount.php';
                             Pengaturan</a>
                     </li>
                     <li>
-                        <a href="#logout"><img src="/bahoitourismv2/asset/icon3/Logout.png" alt="Log Out Icon" /> Log
+                        <a href="../../config/logout.php"><img src="/bahoitourismv2/asset/icon3/Logout.png"
+                                alt="Log Out Icon" /> Log
                             Out</a>
                     </li>
                 </ul>

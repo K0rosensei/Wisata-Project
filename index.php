@@ -24,30 +24,30 @@ if (!empty($username)) {
                 <li class="name"><a href="index.php">Bahoi Tourism</a></li>
                 <li class="spacer"></li>
                 <li class="center"><a href="index.php">Beranda</a></li>
-                <li class="center"><a href="config/logout.php">Kontak</a></li>
+                <li class="center"><a href="#kontak">Kontak</a></li>
                 <li class="spacer"></li>
                 <?php
                 if (empty($token)) {
                 ?>
-                    <li id="loginButton" class="button">
-                        <button id="showLoginBtn" class="masuk">
-                            <img src="asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
-                        </button>
-                    </li>
-                    <li id="registerButton" class="button">
-                        <button id="showRegisterBtn" class="daftar">Daftar</button>
-                    </li>
+                <li id="loginButton" class="button">
+                    <button id="showLoginBtn" class="masuk">
+                        <img src="asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
+                    </button>
+                </li>
+                <li id="registerButton" class="button">
+                    <button id="showRegisterBtn" class="daftar">Daftar</button>
+                </li>
                 <?php
                 } else {
                 ?>
-                    <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
-                    </li>
-                    <li id="usernameDisplay" class="username">
-                        <a href="fitur/akun/akunsaya.php">
-                            <img src="asset/icon1/User.png" alt="User Icon" class="user-icon" />
-                            <span class="user-name"><?= $data['Fullname']; ?></span>
-                        </a>
-                    </li>
+                <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
+                </li>
+                <li id="usernameDisplay" class="username">
+                    <a href="fitur/akun/akunsaya.php">
+                        <img src="asset/icon1/User.png" alt="User Icon" class="user-icon" />
+                        <span class="user-name"><?= $data['Fullname']; ?></span>
+                    </a>
+                </li>
                 <?php
                 }
                 ?>

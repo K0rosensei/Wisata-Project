@@ -2,34 +2,34 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/bahoitourismv2/css/pesan1.css" />
-  <link rel="stylesheet" href="/bahoitourismv2/css/popup.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../css/pesan1.css" />
+    <link rel="stylesheet" href="/bahoitourismv2/css/popup.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <title>Document</title>
 </head>
 
 <body>
-  <div class="header">
-    <div class="Logo">
-      <img src="/bahoitourismv2/asset/icon1/Logo1.png" alt="Bahoi Tourism Logo">
-      <img src="/bahoitourismv2/asset/icon1/Logo2.png" alt="Bahoi Tourism Logo">
+    <div class="header">
+        <div class="Logo">
+            <img src="/bahoitourismv2/asset/icon1/Logo1.png" alt="Bahoi Tourism Logo">
+            <img src="/bahoitourismv2/asset/icon1/Logo2.png" alt="Bahoi Tourism Logo">
+        </div>
+        <nav>
+            <a href="#" class="active">
+                <span class="step">1</span>
+                Detail Pesanan
+            </a>
+            <span class="separator">—</span>
+            <a href="#">
+                <span class="step inactive">2</span>
+                Metode Pembayaran
+            </a>
+        </nav>
     </div>
-    <nav>
-      <a href="#" class="active">
-        <span class="step">1</span>
-        Detail Pesanan
-      </a>
-      <span class="separator">—</span>
-      <a href="#">
-        <span class="step inactive">2</span>
-        Metode Pembayaran
-      </a>
-    </nav>
-  </div>
 
-  <div class="container">
+    <div class="container">
         <h1>Pesanan Saya</h1>
         <p>Detail kontak ini akan digunakan untuk pengiriman e-tiket</p>
         <form>
@@ -41,7 +41,7 @@
                 <input type="radio" id="nona" name="title" value="nona">
                 <label for="nona">Nona</label>
             </div>
-            
+
             <div class="form-group">
                 <label for="fullname">Nama Lengkap Sesuai Identitas</label>
                 <input type="text" id="fullname" name="fullname" value="sisco mamahi">
@@ -63,7 +63,7 @@
             </div>
         </form>
     </div>
-  <script src="/bahoitourismv2/js/js.js"></script>
+    <script src="/bahoitourismv2/js/js.js"></script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@ function sendOTP(email) {
   const otp = Math.floor(100000 + Math.random() * 900000); // Generate 6 digit OTP
 
   return emailjs
-    .send('YOUR SERVICE ID', 'YOUR TEMPLATE ID', {
+    .send('service_0j7toir', 'template_qyzhlmm', {
       to_email: email,
       otp_code: otp,
     })
@@ -131,10 +131,16 @@ function getEmail() {
         return false; // Menandakan bahwa validasi gagal
       }
 
-      return sendOTP(email);
+      return sendOTP(email).then((success) => {
+        if (success) {
+          return email; // Kembalikan email untuk digunakan di langkah berikutnya
+        }
+        return false; // Jika gagal mengirim OTP, batalkan
+      });
     },
   }).then((result) => {
     if (result.value) {
+      const email = result.value;
       Swal.fire({
         title: 'Masukkan OTP',
         html: `<input type="text" id="swal-input2" class="swal2-input" placeholder="Masukkan OTP">`,
@@ -157,6 +163,7 @@ function getEmail() {
             cancelButtonText: 'Batal',
           }).then((result) => {
             if (result.isConfirmed) {
+              console.log(email, user);
               // Simpan email baru ke database
               return fetch('../../config/acountSetting.php', {
                 method: 'POST',
@@ -172,9 +179,9 @@ function getEmail() {
                 .then((responseText) => {
                   window.sessionStorage.removeItem('otp_code');
                   if (responseText.includes('Berhasil')) {
-                    Swal.fire('Sukses!', 'Email berhasil diperbarui.', 'success');
+                    showAlert('success', 'Sukses!', 'Email berhasil diperbarui.', true);
                   } else {
-                    Swal.fire('Gagal!', 'Terjadi kesalahan: ' + responseText, 'error');
+                    showAlert('error', 'Gagal!', 'Terjadi kesalahan: ' + responseText);
                   }
                 })
                 .catch((error) => {

@@ -12,6 +12,7 @@ include '../../config/getdatahs.php';
     <title>Homestay Jein</title>
     <link rel="stylesheet" href="list/hs.css" />
     <link rel="stylesheet" href="/bahoitourismv2/css/popup.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <header>
     <nav>
@@ -24,25 +25,25 @@ include '../../config/getdatahs.php';
             <li class="spacer"></li>
             <?php
             if (empty($token)) {
-                ?>
-                <li id="loginButton" class="button">
-                    <button id="showLoginBtn" class="masuk">
-                        <img src="../../asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
-                    </button>
-                </li>
-                <li id="registerButton" class="button">
-                    <button id="showRegisterBtn" class="daftar">Daftar</button>
-                </li>
-                <?php
+            ?>
+            <li id="loginButton" class="button">
+                <button id="showLoginBtn" class="masuk">
+                    <img src="../../asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
+                </button>
+            </li>
+            <li id="registerButton" class="button">
+                <button id="showRegisterBtn" class="daftar">Daftar</button>
+            </li>
+            <?php
             } else {
-                ?>
-                <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
-                </li>
-                <li id="usernameDisplay" class="username">
-                    <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
-                    <span class="user-name"><?= $username ?></span>
-                </li>
-                <?php
+            ?>
+            <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
+            </li>
+            <li id="usernameDisplay" class="username">
+                <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
+                <span class="user-name"><?= $username ?></span>
+            </li>
+            <?php
             }
             ?>
         </ul>
@@ -115,13 +116,16 @@ include '../../config/getdatahs.php';
     <div class="images">
         <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto1'] ?>" alt="Homestay Jein" class="main-image" />
         <div class="thumbnail-images">
-            <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto2'] ?? 'notfound.png' ?>" alt="Bedroom 1" class="thumbnail" />
-            <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto3'] ?? 'notfound.png' ?>" alt="Bedroom 2" class="thumbnail" />
+            <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto2'] ?? 'notfound.png' ?>" alt="Bedroom 1"
+                class="thumbnail" />
+            <img src="/bahoitourismv2/asset/homestay/<?= $data['Foto3'] ?? 'notfound.png' ?>" alt="Bedroom 2"
+                class="thumbnail" />
         </div>
     </div>
     <div class="info">
         <div class="left">
             <h1><?= $data['Nama'] ?></h1>
+            <input type="hidden" id="nama" value="<?= $data['Nama'] ?>">
             <div class="rating-container">
                 <span class="stars">
                     <?php
@@ -143,6 +147,7 @@ include '../../config/getdatahs.php';
                 <span>RP. 150.000</span> <br />
                 /Orang/Malam
             </p>
+            <input type="hidden" id="id-product" value="<?= $data['Id'] ?>">
             <button id="cekharga" class="btn">Lihat Paket</button>
         </div>
     </div>
@@ -313,24 +318,29 @@ include '../../config/getdatahs.php';
 </div>
 
 <script src="/bahoitourismv2/js/js.js"></script>
+<script src="../../js/paymentSeting.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const cekharga = document.getElementById("cekharga");
-        function showAlert() {
-            <?php
+document.addEventListener("DOMContentLoaded", function() {
+    const cekharga = document.getElementById("cekharga");
+
+
+    function showAlert() {
+        <?php
             if (empty($token)) {
-                ?>
-                alert('Silahkan Login Dahulu')
-                <?php
+            ?>
+        alert('Silahkan Login Dahulu');
+        <?php
             } else {
-                ?>
-                document.location.href = '../../../index.php';
-                <?php
+            ?>
+        // getPayment();
+        window.location.href = '../pesan/pemesanan.php';
+        <?php
             }
             ?>
-        }
-        cekharga.addEventListener("click", showAlert);
-    })
+    }
+    cekharga.addEventListener("click", showAlert);
+})
 </script>
 </body>
 
