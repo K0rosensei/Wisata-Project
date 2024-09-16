@@ -1,68 +1,80 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
 include 'config.php';
 
-
-$id = $_REQUEST['id'];
-$query = "SELECT * FROM homestay WHERE id = $id";
-$result = mysqli_query($conn, $query);
-$data = mysqli_fetch_assoc($result);
-// var_dump($data);
-
-$queryreview = "SELECT * FROM ratinghomestay WHERE Idhomestay = $id";
-$resultreview = mysqli_query($conn, $queryreview);
-// while ($datareview = mysqli_fetch_assoc($resultreview)) {
-//     var_dump($datareview);
-// }
-//$datareview = mysqli_fetch_assoc($resultreview);
-// var_dump($datareview);
-
-$count = "SELECT COUNT(*) AS countrating FROM ratinghomestay WHERE Idhomestay = $id";
-$resultcount = mysqli_query($conn, $count);
-$datacount = mysqli_fetch_assoc($resultcount);
-// var_dump($datacount);
-
-$countuser = "SELECT COUNT(*) AS countuser FROM ratinghomestay WHERE Idhomestay = $id";
-$resultcountuser = mysqli_query($conn, $countuser);
-$datacountuser = mysqli_fetch_assoc($resultcountuser);
-// var_dump($datacountuser);
-
-$avarage = "SELECT AVG(rating) AS avgrating FROM ratinghomestay WHERE Idhomestay = $id";
-$resultavarage = mysqli_query($conn, $avarage);
-$dataavarage = mysqli_fetch_assoc($resultavarage);
-$starsRating = round($dataavarage['avgrating']);
-// var_dump($dataavarage);
-
-$penukarantiket = "SELECT Pentik FROM homestay WHERE Id = $id";
-$resultpenukarantiket = mysqli_query($conn, $penukarantiket);
-$datapenukarantiket = mysqli_fetch_assoc($resultpenukarantiket);
-// var_dump($datapenukarantiket);
-
-$syaratketentuan = "SELECT SnK FROM homestay WHERE Id = $id";
-$resultsyaratketentuan = mysqli_query($conn, $syaratketentuan);
-$datasyaratketentuan = mysqli_fetch_assoc($resultsyaratketentuan);
-// var_dump($datasyaratketentuan);
-
-$informasitambahan = "SELECT Infotambahan FROM homestay WHERE Id = $id";
-$resultinformasitambahan = mysqli_query($conn, $informasitambahan);
-$datainformasitambahan = mysqli_fetch_assoc($resultinformasitambahan);
-// var_dump($datainformasitambahan);
-
-$fasilitas = "SELECT Fasilitas FROM homestay WHERE Id = $id";
-$resultfasilitas = mysqli_query($conn, $fasilitas);
-$datafasilitas = mysqli_fetch_assoc($resultfasilitas);
-// var_dump($datafasilitas);
-
-$avgdecimal = round($dataavarage['avgrating'], 1);
-// var_dump($avgdecimal);
-
-$descavg = "";
-if ($dataavarage['avgrating'] >= 4 && $dataavarage['avgrating'] <= 5) {
-    $descavg = "<span class='good'>BAGUS</span>";
-} else if ($dataavarage['avgrating'] >= 2 && $dataavarage['avgrating'] < 4) {
-    $descavg = "<span class='medium'>SEDANG</span>";
-} else if ($dataavarage['avgrating'] >= 1 && $dataavarage['avgrating'] < 2) {
-    $descavg = "<span class='bad'>BURUK</span>";
-} else {
-    $descavg = "<span class='nothing'>BELUM ADA RATING</span>";
+// Pastikan sesi dimulai
+if (!session_id()) {
+    session_start();
 }
-?>
+
+if (!empty($_SESSION['iduser'])) {
+    $iduser = $_SESSION['iduser'];
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_REQUEST['search'])) {
+        $search = mysqli_real_escape_string($conn, $_REQUEST['search']);
+        $query = "
+            SELECT homestay.*, 
+                   COALESCE(AVG(rh.rating), 0) AS avg_rating 
+            FROM homestay
+        LEFT JOIN ratinghomestay rh ON homestay.Id = rh.Idhomestay
+        LEFT JOIN cekpesan ON homestay.Id = cekpesan.idpesanan AND cekpesan.iduser = $iduser AND cekpesan.tipepesanan = 'hs'
+        WHERE homestay.Nama LIKE '%$search%'
+        GROUP BY homestay.Id
+        ";
+    } else {
+        $query = "
+        SELECT homestay.*, 
+               COALESCE(AVG(rh.rating), 0) AS avg_rating 
+        FROM homestay
+        LEFT JOIN ratinghomestay rh ON homestay.Id = rh.Idhomestay
+        LEFT JOIN cekpesan ON homestay.Id = cekpesan.idpesanan AND cekpesan.iduser = $iduser AND cekpesan.tipepesanan = 'hs'
+        GROUP BY homestay.Id
+    ";
+    }
+
+} else {
+    // Query untuk menampilkan semua homestay dan rata-rata rating tanpa user login
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_REQUEST['search'])) {
+        $search = mysqli_real_escape_string($conn, $_REQUEST['search']);
+        $query = "
+            SELECT homestay.*, 
+                   COALESCE(AVG(rh.rating), 0) AS avg_rating 
+            FROM homestay
+            LEFT JOIN ratinghomestay rh ON homestay.Id = rh.Idhomestay
+            WHERE homestay.Nama LIKE '%$search%'
+            GROUP BY homestay.Id
+        ";
+    } else {
+        $query = "
+            SELECT homestay.*, 
+                   COALESCE(AVG(rh.rating), 0) AS avg_rating 
+            FROM homestay
+            LEFT JOIN ratinghomestay rh ON homestay.Id = rh.Idhomestay
+            GROUP BY homestay.Id
+        ";
+    }
+}
+
+if (isset($_REQUEST['id'])) {
+    $id = (int) $_REQUEST['id']; // Sanitasi ID untuk menghindari SQL Injection
+    $query = "SELECT * FROM homestay WHERE Id = $id";
+    $result = mysqli_query($conn, $query);
+    $data = mysqli_fetch_assoc($result);
+
+    $penukarantiket = "SELECT Pentik FROM homestay WHERE Id = $id";
+    $resultpenukarantiket = mysqli_query($conn, $penukarantiket);
+    $datapenukarantiket = mysqli_fetch_assoc($resultpenukarantiket);
+
+    $syaratketentuan = "SELECT SnK FROM homestay WHERE Id = $id";
+    $resultsyaratketentuan = mysqli_query($conn, $syaratketentuan);
+    $datasyaratketentuan = mysqli_fetch_assoc($resultsyaratketentuan);
+
+    $informasitambahan = "SELECT Infotambahan FROM homestay WHERE Id = $id";
+    $resultinformasitambahan = mysqli_query($conn, $informasitambahan);
+    $datainformasitambahan = mysqli_fetch_assoc($resultinformasitambahan);
+
+    $fasilitas = "SELECT Fasilitas FROM homestay WHERE Id = $id";
+    $resultfasilitas = mysqli_query($conn, $fasilitas);
+    $datafasilitas = mysqli_fetch_assoc($resultfasilitas);
+}
+
+$result = mysqli_query($conn, $query);

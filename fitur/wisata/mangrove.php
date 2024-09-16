@@ -1,5 +1,8 @@
 <?php 
 include '../../config/session.php';
+include '../../config/getwisata.php';
+include '../../config/reviewwisata.php';
+include_once '../../config/alert.php';
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +45,7 @@ include '../../config/session.php';
           </li>
           <li id="usernameDisplay" class="username">
             <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
-            <span class="user-name"><?= $username ?></span>
+            <span class="user-name"><?= $_SESSION['username'] ?></span>
           </li>
           <?php
         }
@@ -125,30 +128,39 @@ include '../../config/session.php';
     <h1>Wisata Mangrove</h1>
     <div class="tour-container">
       <div class="collage-container">
-        <img src="/bahoitourismv2/asset/wisata/1.png" alt="Image 1" class="horizontal" />
-        <img src="/bahoitourismv2/asset/wisata/2.png" alt="Image 2" />
+        <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto1'] ?>" alt="Image 1" class="horizontal" />
+        <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto2'] ?>" alt="Image 2" />
         <div class="vertical">
-          <img src="/bahoitourismv2/asset/wisata/4.png" alt="Image 3" />
-          <img src="/bahoitourismv2/asset/wisata/3.png" alt="Image 4" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto3'] ?>" alt="Image 3" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto4'] ?>" alt="Image 4" />
         </div>
         <div class="vertical">
-          <img src="/bahoitourismv2/asset/wisata/5.png" alt="Image 5" />
-          <img src="/bahoitourismv2/asset/wisata/6.png" alt="Image 6" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto5'] ?>" alt="Image 5" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto6'] ?>" alt="Image 6" />
         </div>
-        <img src="/bahoitourismv2/asset/wisata/7.png" alt="Image 7" />
+        <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto7'] ?>" alt="Image 7" />
       </div>
       <div class="tour-info">
         <div class="tour-details">
-          <h2>Wisata Mangrove</h2>
+          <h2><?= $data ['Tempat'] ?></h2>
           <div class="rating">
-            <span class="stars">★★★★☆</span>
-            <span class="rating-number">4.8</span>
-            <span class="review-count">(3 reviews)</span>
+          <span class="stars">
+                    <?php
+                    for ($i = 1; $i <= 5; $i++) {
+                        if ($i <= $starsRating) {
+                            echo '<span class="star">&#9733;</span>';
+                        } else {
+                            echo '<span class="star">&#9734;</span>';
+                        }
+                    }
+                    ?>
+                </span>
+                <span class="rating"><?= $avgdecimal ?>/5 (<?= $datacountuser['countuser'] ?> Review)</span>
           </div>
         </div>
         <div class="price">
           <span>Mulai dari <br></span>
-          <span class="price-amount">Rp. 5.000</span>
+          <span class="price-amount">Rp.<?= $data ['Harga'] ?></span>
           <span>/Orang</span>
           <br>
           <button id="cekharga" class="book-now">Lihat Paket</button>

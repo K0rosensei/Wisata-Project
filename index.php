@@ -1,5 +1,6 @@
 <?php
 include 'config/session.php';
+include 'config/bestreview.php';
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +43,7 @@ include 'config/session.php';
           <li id="usernameDisplay" class="username">
             <a href="fitur/akun/akunsaya.php">
               <img src="asset/icon1/User.png" alt="User Icon" class="user-icon" />
-              <span class="user-name"><?= $username ?></span>
+              <span class="user-name"><?= $_SESSION['username'] ?></span>
             </a>
           </li>
           <?php
@@ -165,150 +166,92 @@ include 'config/session.php';
     <h1>Rekomendasi Homestay</h1>
     <h2>Berdasarkan review teratas</h2>
     <div class="homestay-grid">
-      <div class="homestay-card">
-        <img src="asset/homestay/Aget1.png" alt="Homestay Aget" />
-        <h3>Homestay Aget</h3>
-        <p>Sudah termasuk sarapan</p>
-        <div class="info">
-          <div class="rating">
-            <span class="stars">★★★★☆</span>
-            <span>(4 Review)</span>
+      <?php
+      while ($data = mysqli_fetch_assoc($result)) {
+        // Hitung avgdecimal berdasarkan hasil query
+        $avgdecimal = round($data['avg_rating'], 1);
+        ?>
+        <div class="homestay-card">
+          <img src="asset/homestay/<?= $data['Foto1'] ?>" alt="Homestay Aget" />
+          <h3><?= $data['Nama'] ?></h3>
+          <p><?= $data['Desk'] ?></p>
+          <div class="info">
+            <div class="rating">
+              <span class="stars">
+                <?php
+                // Tampilkan bintang berdasarkan nilai rating
+                $starsRating = round($data['avg_rating']);
+                for ($i = 0; $i < 5; $i++) {
+                  if ($i < $starsRating) {
+                    echo '★'; // Full star
+                  } else {
+                    echo '☆'; // Empty star
+                  }
+                }
+                ?>
+              </span>
+              <span><?= $avgdecimal ?>/5</span>
+            </div>
+            <div class="details">
+              <p>Maksimal <?= $data['Kapasitas'] ?> Orang</p>
+              <p class="price">Rp. <?= $data['Harga'] ?>/Malam /Org</p>
+            </div>
           </div>
-          <div class="details">
-            <p>Maksimal 2 Orang</p>
-            <p class="price">Rp. 150.000 /Malam /Org</p>
-          </div>
+          <a href="fitur/hs/detail.php?id=1"><button>Pesan Sekarang</button></a>
         </div>
-        <a href="fitur/hs/detail.php?id=1"><button>Pesan Sekarang</button></a>
-      </div>
-      <div class="homestay-card">
-        <img src="asset/homestay/Karisa1.png" alt="Homestay Karisa" />
-        <h3>Homestay Karisa</h3>
-        <p>Sudah termasuk sarapan</p>
-        <div class="info">
-          <div class="rating">
-            <span class="stars">★★★★☆</span>
-            <span>(4 Review)</span>
-          </div>
-          <div class="details">
-            <p>Maksimal 2 Orang</p>
-            <p class="price">Rp. 150.000 /Malam /Org</p>
-          </div>
-        </div>
-        <a href="fitur/hs/detail.php?id=3"><button>Pesan Sekarang</button></a>
-      </div>
-      <div class="homestay-card">
-        <img src="asset/homestay/Sally1.png" alt="Homestay Sally" />
-        <h3>Homestay Sally</h3>
-        <p>Sudah termasuk sarapan</p>
-        <div class="info">
-          <div class="rating">
-            <span class="stars">★★★★☆</span>
-            <span>(4 Review)</span>
-          </div>
-          <div class="details">
-            <p>Maksimal 8-10 Orang</p>
-            <p class="price">Rp. 150.000 /Malam /Org</p>
-          </div>
-        </div>
-        <a href="fitur/hs/detail.php?id=6"><button>Pesan Sekarang</button></a>
-      </div>
+        <?php
+      }
+      ?>
     </div>
     <div class="view-all">
-      <a href="fitur/hs/homestay.php"><button>Lihat Semua</button></a>
-    </div>
-  </div>
+        <a href="fitur/hs/homestay.php"><button>Lihat Semua</button></a>
+      </div>
 
-  <div class="owner" id="kontak">
-    <div>
-      <img src="asset/icon1/DekiTamamilang.png" alt="" />
-      <h4>Dekky Tamamilang</h4>
-      <p>Sekretaris Desa</p>
-      <div class="contact">
-        <img src="asset/icon1/fb.png" alt="Facebook" />
-        <img src="asset/icon1/ig.png" alt="Instagram" />
-        <img src="asset/icon1/wa.png" alt="WhatsApp" />
+    <div class="owner" id="kontak">
+      <div>
+        <img src="asset/icon1/DekiTamamilang.png" alt="" />
+        <h4>Dekky Tamamilang</h4>
+        <p>Sekretaris Desa</p>
+        <div class="contact">
+          <img src="asset/icon1/fb.png" alt="Facebook" />
+          <img src="asset/icon1/ig.png" alt="Instagram" />
+          <img src="asset/icon1/wa.png" alt="WhatsApp" />
+        </div>
+      </div>
+      <div>
+        <img src="asset/icon1/JecelineMelvandaDalero.png" alt="" />
+        <h4>Jaceline M. Dalero</h4>
+        <p>Ketua Pengelola Homestay</p>
+        <div class="contact">
+          <img src="asset/icon1/fb.png" alt="Facebook" />
+          <img src="asset/icon1/ig.png" alt="Instagram" />
+          <img src="asset/icon1/wa.png" alt="WhatsApp" />
+        </div>
+      </div>
+      <div>
+        <img src="asset/icon1/OIP.png" alt="" />
+        <h4>Maxi Lahading (the monster)</h4>
+        <p>Pengelola Daerah Perlindungan Laut</p>
+        <div class="contact">
+          <img src="asset/icon1/fb.png" alt="Facebook" />
+          <img src="asset/icon1/ig.png" alt="Instagram" />
+          <img src="asset/icon1/wa.png" alt="WhatsApp" />
+        </div>
       </div>
     </div>
-    <div>
-      <img src="asset/icon1/JecelineMelvandaDalero.png" alt="" />
-      <h4>Jaceline M. Dalero</h4>
-      <p>Ketua Pengelola Homestay</p>
-      <div class="contact">
-        <img src="asset/icon1/fb.png" alt="Facebook" />
-        <img src="asset/icon1/ig.png" alt="Instagram" />
-        <img src="asset/icon1/wa.png" alt="WhatsApp" />
-      </div>
-    </div>
-    <div>
-      <img src="asset/icon1/OIP.png" alt="" />
-      <h4>Maxi Lahading (the monster)</h4>
-      <p>Pengelola Daerah Perlindungan Laut</p>
-      <div class="contact">
-        <img src="asset/icon1/fb.png" alt="Facebook" />
-        <img src="asset/icon1/ig.png" alt="Instagram" />
-        <img src="asset/icon1/wa.png" alt="WhatsApp" />
-      </div>
-    </div>
-  </div>
 
-  <div class="location-map">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8540.987556656964!2d125.0123935377705!3d1.7209034284464684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3287b9c99f133b2b%3A0xe42b6e3af1c2237a!2sBahoi%2C%20Kec.%20Likupang%20Bar.%2C%20Kabupaten%20Minahasa%20Utara%2C%20Sulawesi%20Utara!5e0!3m2!1sid!2sid!4v1724567597955!5m2!1sid!2sid"
-      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"></iframe>
-  </div>
-
-  <footer>
-    <div class="footer-about">
-      <h3>About Bahoi Tourism</h3>
-      <ul>
-        <li>Cara Memesan</li>
-        <li>Cara Membatalkan</li>
-        <li>Pusat Bantuan</li>
-        <li>Kupon</li>
-        <li>About Us</li>
-      </ul>
+    <div class="location-map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8540.987556656964!2d125.0123935377705!3d1.7209034284464684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3287b9c99f133b2b%3A0xe42b6e3af1c2237a!2sBahoi%2C%20Kec.%20Likupang%20Bar.%2C%20Kabupaten%20Minahasa%20Utara%2C%20Sulawesi%20Utara!5e0!3m2!1sid!2sid!4v1724567597955!5m2!1sid!2sid"
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
-    <div class="footer-links">
-      <h3>Ikuti Kami di</h3>
-      <ul class="social-icons">
-        <li>
-          <a href="#"><img src="asset/icon4/facebook.png" alt="Facebook" /> Facebook</a>
-        </li>
-        <li>
-          <a href="#"><img src="asset/icon4/Instagram.png" alt="Instagram" /> Instagram</a>
-        </li>
-        <li>
-          <a href="#"><img src="asset/icon4/Telegram.png" alt="Telegram" /> Telegram</a>
-        </li>
-        <li>
-          <a href="#"><img src="asset/icon4/Whatsapp.png" alt="WhatsApp" /> WhatsApp</a>
-        </li>
-        <li>
-          <a href="#"><img src="asset/icon4/Yt.png" alt="Youtube" /> Youtube</a>
-        </li>
-        <li>
-          <a href="#"><img src="asset/icon4/Tiktok.png" alt="Tiktok" /> Tiktok</a>
-        </li>
-      </ul>
-    </div>
-    <div class="footer-qr">
-      <h3>QR code</h3>
-      <img src="asset/icon4/qrcode.jpeg" alt="Scan untuk terhubung ke grup WhatsApp" />
-      <p>Scan untuk terhubung ke grup WhatsApp</p>
-    </div>
-    <div style="clear: both"></div>
-  </footer>
 
-  <div class="copyright">
-    <p>
-      Hak Cipta © 2024 Bahoi Tourism. Seluruh hak cipta dilindungi undang -
-      undang
-    </p>
-  </div>
+    <?php
+    include 'fitur/footer/footer.php';
+    ?>
 
-  <script src="js/js.js"></script>
+    <script src="js/js.js"></script>
 </body>
 
 </html>

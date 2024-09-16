@@ -76,7 +76,7 @@ if ($errorMessage) {
           </li>
           <li id="usernameDisplay" class="username">
             <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
-            <span class="user-name"><?= $username ?></span>
+            <span class="user-name"><?= $_SESSION['username'] ?></span>
           </li>
           <?php
         }
@@ -157,161 +157,54 @@ if ($errorMessage) {
     <h1>Perlengkapan Diving & Snorkeling</h1>
     <div class="grid-container">
       <?php
-      while ($data = mysqli_fetch_assoc($result)) {
-        $alreadyOrdered = !is_null($data['already_ordered']); // Cek apakah user sudah memesan
-        ?>
-        <div class="card">
-          <img src="/bahoitourismv2/asset/diving/<?= $data['Image'] ?>" alt="Fullset Diving" />
-          <div class="card-content">
-            <h3><?= $data['Alat'] ?></h3>
-            <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-            <p>
-              <?= $data['Keterangan'] ?>
-            </p>
-            <div class="price-info">
-              <span class="price">Rp. <?= $data['Harga'] ?> <span class="unit">/Set /Orang</span></span>
-              <form action="" method="POST">
-                <input type="hidden" name="id" value="<?= $data['Id'] ?>">
-                <?php if ($alreadyOrdered): ?>
-                  <button type="submit" name="batalsaja">Batal Pesan</button>
-                <?php else: ?>
-                  <button type="submit" name="pesansaja">Pesan Sekarang</button>
-                <?php endif; ?>
-              </form>
+      if (empty($token)) {
+        while ($data = mysqli_fetch_assoc($result)) {
+          ?>
+          <div class="card">
+            <img src="/bahoitourismv2/asset/diving/<?= $data['Image'] ?>" alt="Fullset Diving" />
+            <div class="card-content">
+              <h3><?= $data['Alat'] ?></h3>
+              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
+              <p>
+                <?= $data['Keterangan'] ?>
+              </p>
+              <div class="price-info">
+                <span class="price">Rp. <?= $data['Harga'] ?> <span class="unit">/Set /Orang</span></span>
+                    <button type="submit" name="pesansaja">Pesan Sekarang</button>
+              </div>
             </div>
           </div>
-        </div>
-        <?php
+          <?php
+        }
+      } else {
+        while ($data = mysqli_fetch_assoc($result)) {
+          $alreadyOrdered = !is_null($data['already_ordered']); // Cek apakah user sudah memesan
+          ?>
+          <div class="card">
+            <img src="/bahoitourismv2/asset/diving/<?= $data['Image'] ?>" alt="Fullset Diving" />
+            <div class="card-content">
+              <h3><?= $data['Alat'] ?></h3>
+              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
+              <p>
+                <?= $data['Keterangan'] ?>
+              </p>
+              <div class="price-info">
+                <span class="price">Rp. <?= $data['Harga'] ?> <span class="unit">/Set /Orang</span></span>
+                <form action="" method="POST">
+                  <input type="hidden" name="id" value="<?= $data['Id'] ?>">
+                  <?php if ($alreadyOrdered): ?>
+                    <button type="submit" name="batalsaja">Batal Pesan</button>
+                  <?php else: ?>
+                    <button type="submit" name="pesansaja">Pesan Sekarang</button>
+                  <?php endif; ?>
+                </form>
+              </div>
+            </div>
+          </div>
+          <?php
+        }
       }
       ?>
-      <!-- <div class="card">
-            <img src="/bahoitourismv2/asset/diving/fullsetsnorkeling.png" alt="Fullset Snorkeling" />
-            <div class="card-content">
-              <h3>Fullset Snorkeling</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 150.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <img src="/bahoitourismv2/asset/diving/Hotpot.png" alt="BCD (Jacket)" />
-            <div class="card-content">
-              <h3>BCD (Jacket)</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 60.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <img src="/bahoitourismv2/asset/diving/Pelampung.png" alt="Fullset Pelampung" />
-            <div class="card-content">
-              <h3>Pelampung</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 50.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <img src="/bahoitourismv2/asset/diving/Regulator.png" alt="Regulator" />
-            <div class="card-content">
-              <h3>Regulator</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 60.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <img src="/bahoitourismv2/asset/diving/Boots.png" alt="Boots" />
-            <div class="card-content">
-              <h3>Boots</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 50.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <img src="/bahoitourismv2/asset/diving/Wetsuit.png" alt="Wetsuit" />
-            <div class="card-content">
-              <h3>Wetsuit</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 50.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <img src="/bahoitourismv2/asset/diving/Hotpot2.png" alt="Snorkel & Mask" />
-            <div class="card-content">
-              <h3>Snorkel & Mask</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 100.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <img src="/bahoitourismv2/asset/diving/Fins.png" alt="Fins" />
-            <div class="card-content">
-              <h3>Fins</h3>
-              <p><i class="fas fa-clock"></i> Pemakaian selama 7 jam</p>
-              <p>
-                Jika barang yang anda pesan tidak sesuai, silahkan hubungi admin
-              </p>
-              <div class="price-info">
-                <span class="price"
-                  >Rp. 50.000 <span class="unit">/Set /Orang</span></span
-                >
-                <button id="cekharga">Pesan Sekarang</button>
-              </div>
-            </div>
-          </div> -->
     </div>
   </div>
 

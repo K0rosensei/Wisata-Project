@@ -1,6 +1,8 @@
 <?php
 include '../../config/session.php';
 include '../../config/getdatahs.php';
+include '../../config/reviewhs.php';
+include_once '../../config/alert.php';
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +42,7 @@ include '../../config/getdatahs.php';
                 </li>
                 <li id="usernameDisplay" class="username">
                     <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
-                    <span class="user-name"><?= $username ?></span>
+                    <span class="user-name"><?= $_SESSION['username'] ?></span>
                 </li>
                 <?php
             }
