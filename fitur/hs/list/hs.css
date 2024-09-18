@@ -267,6 +267,7 @@ button .icon {
 }
 
 .review-summary h2 {
+    color: black;
     font-size: 1.5em;
     margin-bottom: 5px;
 }
@@ -295,38 +296,6 @@ button .icon {
     font-weight: bold;
 }
 
-.reviews-navigation {
-    display: flex;
-    margin: 20px;
-    margin-left: 85%;
-}
-
-.reviews-navigation img {
-    width: 60px;
-    height: auto;
-    cursor: pointer;
-    margin: 0 2px;
-}
-
-.reviews {
-    display: flex;
-  justify-content: space-between;
-  padding-bottom: 25px;
-  border-bottom: solid 1px;
-}
-
-.review-card {
-    background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  width: 32%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .review-header {
     display: flex;
   justify-content: space-between;
@@ -335,7 +304,7 @@ button .icon {
 }
 
 .review-rating {
-    font-size: 1.2em;
+    font-size: 1em;
     color: #f39c12;
 }
 

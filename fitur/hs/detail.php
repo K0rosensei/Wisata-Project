@@ -13,6 +13,7 @@ include_once '../../config/alert.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homestay Jein</title>
     <link rel="stylesheet" href="list/hs.css" />
+    <link rel="stylesheet" href="../review/review.css">
     <link rel="stylesheet" href="/bahoitourismv2/css/popup.css" />
 </head>
 <header>
@@ -154,23 +155,41 @@ include_once '../../config/alert.php';
             <?= $avgdecimal ?>/5 <?= $descavg ?> <?= $datacount['countrating'] ?> Review
         </p>
     </div>
-    <div class="reviews-navigation">
-        <img src="/bahoitourismv2/asset/icon2/BackArrow.png" alt="Previous" class="prev-reviews" />
-        <img src="/bahoitourismv2/asset/icon2/NextArrow.png" alt="Next" class="next-reviews" />
+
+    <div class="reviewscomment">
+        <button id="openReviewModal">Tulis review</button>
     </div>
-    <div class="reviews">
+
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tulis Review Anda</h2>
+            <form id="reviewForm">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="5">5 Bintang</option>
+                    <option value="4">4 Bintang</option>
+                    <option value="3">3 Bintang</option>
+                    <option value="2">2 Bintang</option>
+                    <option value="1">1 Bintang</option>
+                </select>
+
+                <label for="review">Review:</label>
+                <textarea id="review" name="review" required></textarea>
+
+                <button type="submit">Kirim Review</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="wrapper">
         <?php
         while ($datareview = mysqli_fetch_assoc($resultreview)) {
         ?>
-        <div class="review-card">
-            <div class="review-header">
-                <div class="review-rating"><?= $datareview['Rating'] ?>/5 ★★★★★</div>
-                <div class="review-date"><?= $datareview['Tanggal'] ?></div>
-            </div>
-            <div class="review-text">
-                <?= $datareview['Review'] ?>
-            </div>
-        </div>
+        <?php include '../review/review.php'; ?>
         <?php
         }
         ?>
@@ -223,54 +242,7 @@ include_once '../../config/alert.php';
     </div>
 </div>
 
-<footer>
-    <div class="footer-about">
-        <h3>About Bahoi Tourism</h3>
-        <ul>
-            <li>Cara Memesan</li>
-            <li>Cara Membatalkan</li>
-            <li>Pusat Bantuan</li>
-            <li>Kupon</li>
-            <li>About Us</li>
-        </ul>
-    </div>
-    <div class="footer-links">
-        <h3>Ikuti Kami di</h3>
-        <ul class="social-icons">
-            <li>
-                <a href="#"><img src="/bahoitourismv2/asset/icon4/facebook.png" alt="Facebook" /> Facebook</a>
-            </li>
-            <li>
-                <a href="#"><img src="/bahoitourismv2/asset/icon4/Instagram.png" alt="Instagram" /> Instagram</a>
-            </li>
-            <li>
-                <a href="#"><img src="/bahoitourismv2/asset/icon4/Telegram.png" alt="Telegram" /> Telegram</a>
-            </li>
-            <li>
-                <a href="#"><img src="/bahoitourismv2/asset/icon4/Whatsapp.png" alt="WhatsApp" /> WhatsApp</a>
-            </li>
-            <li>
-                <a href="#"><img src="/bahoitourismv2/asset/icon4/Yt.png" alt="Youtube" /> Youtube</a>
-            </li>
-            <li>
-                <a href="#"><img src="/bahoitourismv2/asset/icon4/Tiktok.png" alt="Tiktok" /> Tiktok</a>
-            </li>
-        </ul>
-    </div>
-    <div class="footer-qr">
-        <h3>QR code</h3>
-        <img src="/bahoitourismv2/asset/icon4/qrcode.jpeg" alt="Scan untuk terhubung ke grup WhatsApp" />
-        <p>Scan untuk terhubung ke grup WhatsApp</p>
-    </div>
-    <div style="clear: both"></div>
-</footer>
-
-<div class="copyright">
-    <p>
-        Hak Cipta © 2024 Bahoi Tourism. Seluruh hak cipta dilindungi undang -
-        undang
-    </p>
-</div>
+<?php include '../footer/footer.php'; ?>
 
 <script src="/bahoitourismv2/js/js.js"></script>
 <script>
@@ -292,6 +264,43 @@ include_once '../../config/alert.php';
         cekharga.addEventListener("click", showAlert);
     })
 </script>
+<script>
+        const openReviewModal = document.getElementById('openReviewModal');
+        const reviewModal = document.getElementById('reviewModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        const reviewForm = document.getElementById('reviewForm');
+
+        openReviewModal.onclick = function() {
+            reviewModal.style.display = "block";
+        }
+
+        closeBtn.onclick = function() {
+            reviewModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == reviewModal) {
+                reviewModal.style.display = "none";
+            }
+        }
+
+        reviewForm.onsubmit = function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const rating = document.getElementById('rating').value;
+            const review = document.getElementById('review').value;
+
+            // Di sini Anda bisa menambahkan logika untuk mengirim data ke server
+            console.log('Review submitted:', { name, rating, review });
+
+            // Reset form dan tutup modal
+            reviewForm.reset();
+            reviewModal.style.display = "none";
+
+            // Tampilkan pesan sukses (opsional)
+            alert('Terima kasih atas review Anda!');
+        }
+    </script>
 </body>
 
 </html>
