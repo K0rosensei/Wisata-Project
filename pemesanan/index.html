@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bahoi Tourism - Pemesanan Homestay</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="path/to/logo.png" alt="Bahoi Tourism Logo" class="logo"> <!-- Replace with actual path to logo image -->
+            <h1>Bahoi Tourism</h1>
+        </header>
+        <main>
+            <div class="steps">
+                <div class="step active">
+                    <div class="circle">1</div>
+                    <span class="label">Detail Pesanan</span>
+                </div>
+                <div class="step">
+                    <div class="circle">2</div>
+                    <span class="label">Metode Pembayaran</span>
+                </div>
+            </div>
+            <section class="order-details">
+                <h2>Pesanan Saya</h2>
+                <p>Detail kontak ini akan digunakan untuk pengiriman e-tiket</p>
+                <form>
+                    <div class="form-group">
+                        <label class="radio-label">
+                            <input type="radio" name="title" value="Tuan" checked> Tuan
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="title" value="Nyonya"> Nyonya
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="title" value="Nona"> Nona
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="full-name">Nama Lengkap Sesuai Identitas</label>
+                        <input type="text" id="full-name" name="full-name" value="sisco mamahi">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Nomor Ponsel</label>
+                        <div class="phone-input">
+                            <select id="country-code" name="country-code">
+                                <option value="+62">+62</option>
+                                <option value="+1">+1</option>
+                                <option value="+44">+44</option>
+                                <!-- Add more country codes as needed -->
+                            </select>
+                            <input type="tel" id="phone" name="phone" value="821 9669 8282">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Alamat Email</label>
+                        <input type="email" id="email" name="email" value="sisco.mamahi@gmail.com">
+                    </div>
+                </form>
+            </section>
+            <section class="stay-details">
+                <h2>Detail Menginap di (Jein Homestay)</h2>
+                <p>Supaya proses check-in lebih lancar, masukkan nama tamu sesuai kartu identitas, ya.</p>
+                <div class="room-details">
+                    <p><strong>Detail Kamar</strong></p>
+                    <ul>
+                        <li><i class="fas fa-user"></i> 2 Tamu</li>
+                        <li><i class="fas fa-bed"></i> 1 Ganda</li>
+                        <li><i class="fas fa-utensils"></i> Sarapan</li>
+                        <li><i class="fas fa-smoking-ban"></i> Bebas Asap Rokok</li>
+                    </ul>
+                    <p><strong>Kamar 1:</strong> Tuan Sisco mamahi</p>
+                </div>
+            </section>
+            <div class="price">
+                <p>Rp. 150.000</p>
+                <button type="submit" class="next-button">Lanjutkan</button>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024. Seluruh hak cipta dilindungi undang-undang</p>
+        </footer>
+    </div>
+</body>
+</html>
