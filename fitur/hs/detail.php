@@ -27,7 +27,7 @@ include_once '../../config/alert.php';
             <li class="spacer"></li>
             <?php
             if (empty($token)) {
-                ?>
+            ?>
                 <li id="loginButton" class="button">
                     <button id="showLoginBtn" class="masuk">
                         <img src="../../asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
@@ -36,16 +36,16 @@ include_once '../../config/alert.php';
                 <li id="registerButton" class="button">
                     <button id="showRegisterBtn" class="daftar">Daftar</button>
                 </li>
-                <?php
+            <?php
             } else {
-                ?>
+            ?>
                 <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
                 </li>
                 <li id="usernameDisplay" class="username">
                     <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
                     <span class="user-name"><?= $_SESSION['username'] ?></span>
                 </li>
-                <?php
+            <?php
             }
             ?>
         </ul>
@@ -162,13 +162,13 @@ include_once '../../config/alert.php';
 
     <div id="reviewModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closeModal()">&times;</span>
             <h2>Tulis Review Anda</h2>
-            <form id="reviewForm">
-                <label for="name">Nama:</label>
-                <input type="text" id="name" name="name" required>
+            <form method="POST" action="">
+                <input type="hidden" name="idhomestay" value="<?php echo htmlspecialchars($homestayData['id']); ?>">
 
-                <label for="rating">Rating:</label>
+                <p><?php echo htmlspecialchars($homestayData['nama']); ?></p>
+                <label3 for="rating">Rating:</label3>
                 <select id="rating" name="rating" required>
                     <option value="5">5 Bintang</option>
                     <option value="4">4 Bintang</option>
@@ -176,20 +176,26 @@ include_once '../../config/alert.php';
                     <option value="2">2 Bintang</option>
                     <option value="1">1 Bintang</option>
                 </select>
-
-                <label for="review">Review:</label>
+                <labe3 for="review">Review:</labe3>
                 <textarea id="review" name="review" required></textarea>
-
                 <button type="submit">Kirim Review</button>
             </form>
         </div>
     </div>
 
+    <?php if (isset($successMessage)): ?>
+        <div class="success-message"><?php echo htmlspecialchars($successMessage); ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($errorMessage)): ?>
+        <div class="error-message"><?php echo htmlspecialchars($errorMessage); ?></div>
+    <?php endif; ?>
+
     <div class="wrapper">
         <?php
         while ($datareview = mysqli_fetch_assoc($resultreview)) {
         ?>
-        <?php include '../review/review.php'; ?>
+            <?php include '../review/review.php'; ?>
         <?php
         }
         ?>
@@ -246,18 +252,19 @@ include_once '../../config/alert.php';
 
 <script src="/bahoitourismv2/js/js.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const cekharga = document.getElementById("cekharga");
+
         function showAlert() {
             <?php
             if (empty($token)) {
-                ?>
+            ?>
                 alert('Silahkan Login Dahulu')
-                <?php
+            <?php
             } else {
-                ?>
+            ?>
                 document.location.href = '../../../index.php';
-                <?php
+            <?php
             }
             ?>
         }
@@ -265,42 +272,62 @@ include_once '../../config/alert.php';
     })
 </script>
 <script>
-        const openReviewModal = document.getElementById('openReviewModal');
-        const reviewModal = document.getElementById('reviewModal');
-        const closeBtn = document.getElementsByClassName('close')[0];
-        const reviewForm = document.getElementById('reviewForm');
+    const openReviewModal = document.getElementById('openReviewModal');
+    const reviewModal = document.getElementById('reviewModal');
+    const closeBtn = document.getElementsByClassName('close')[0];
+    const reviewForm = document.getElementById('reviewForm');
 
-        openReviewModal.onclick = function() {
-            reviewModal.style.display = "block";
-        }
+    openReviewModal.onclick = function() {
+        reviewModal.style.display = "block";
+    }
 
-        closeBtn.onclick = function() {
+    closeBtn.onclick = function() {
+        reviewModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == reviewModal) {
             reviewModal.style.display = "none";
         }
+    }
 
-        window.onclick = function(event) {
-            if (event.target == reviewModal) {
-                reviewModal.style.display = "none";
-            }
-        }
+    // reviewForm.onsubmit = function(e) {
+    //     e.preventDefault();
+    //     const name = document.getElementById('name').value;
+    //     const rating = document.getElementById('rating').value;
+    //     const review = document.getElementById('review').value;
 
-        reviewForm.onsubmit = function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const rating = document.getElementById('rating').value;
-            const review = document.getElementById('review').value;
+    //     // Di sini Anda bisa menambahkan logika untuk mengirim data ke server
+    //     console.log('Review submitted:', {
+    //         name,
+    //         rating,
+    //         review
+    //     });
 
-            // Di sini Anda bisa menambahkan logika untuk mengirim data ke server
-            console.log('Review submitted:', { name, rating, review });
+    //     // Reset form dan tutup modal
+    //     reviewForm.reset();
+    //     reviewModal.style.display = "none";
 
-            // Reset form dan tutup modal
-            reviewForm.reset();
-            reviewModal.style.display = "none";
+    //     // Tampilkan pesan sukses (opsional)
+    //     alert('Terima kasih atas review Anda!');
+    // }
+</script>
+<script>
+    function closeModal() {
+        document.getElementById('reviewModal').style.display = 'none';
+    }
 
-            // Tampilkan pesan sukses (opsional)
-            alert('Terima kasih atas review Anda!');
-        }
-    </script>
+    document.getElementById('reviewForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Di sini Anda bisa menambahkan kode untuk mengirim form menggunakan AJAX
+        // Untuk contoh sederhana, kita hanya akan menutup modal
+        closeModal();
+
+        // Tampilkan pesan sukses (dalam praktik nyata, ini akan ditampilkan setelah respons AJAX)
+        alert('Terima kasih atas review Anda!');
+    });
+</script>
 </body>
 
 </html>

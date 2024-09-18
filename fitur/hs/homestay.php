@@ -166,7 +166,7 @@ include '../../config/search.php';
               <p class="price">Rp. <?= $data['Harga'] ?>/Malam /Org</p>
             </div>
           </div>
-          <a href="detail.php?id=11"><button>Pesan Sekarang</button></a>
+          <a onclick="window.location.href='detail.php?id=<?php echo $data['Id']; ?>';"><button>Pesan Sekarang</button></a>
         </div>
       <?php
       }
