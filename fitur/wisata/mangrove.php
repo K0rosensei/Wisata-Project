@@ -1,4 +1,4 @@
-<?php 
+<?php
 include '../../config/session.php';
 include '../../config/getwisata.php';
 include '../../config/reviewwisata.php';
@@ -12,7 +12,9 @@ include_once '../../config/alert.php';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/bahoitourismv2/css/Style4.css" />
+  <link rel="stylesheet" href="../review/review.css">
   <link rel="stylesheet" href="/bahoitourismv2/css/popup.css" />
+  <link rel="stylesheet" href="/bahoitourismv2/css/alert.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <title>Document</title>
 </head>
@@ -29,7 +31,7 @@ include_once '../../config/alert.php';
         <li class="spacer"></li>
         <?php
         if (empty($token)) {
-          ?>
+        ?>
           <li id="loginButton" class="button">
             <button id="showLoginBtn" class="masuk">
               <img src="../../asset/icon1/User.png" alt="User Icon" class="icon" />Masuk
@@ -38,16 +40,16 @@ include_once '../../config/alert.php';
           <li id="registerButton" class="button">
             <button id="showRegisterBtn" class="daftar">Daftar</button>
           </li>
-          <?php
+        <?php
         } else {
-          ?>
+        ?>
           <li id="pemesananButton" class="center"><a href="fitur/pesan/pemesanan.php">Pemesanan</a>
           </li>
           <li id="usernameDisplay" class="username">
             <img src="../../asset/icon1/User.png" alt="User Icon" class="user-icon" />
             <span class="user-name"><?= $_SESSION['username'] ?></span>
           </li>
-          <?php
+        <?php
         }
         ?>
       </ul>
@@ -128,142 +130,107 @@ include_once '../../config/alert.php';
     <h1>Wisata Mangrove</h1>
     <div class="tour-container">
       <div class="collage-container">
-        <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto1'] ?>" alt="Image 1" class="horizontal" />
-        <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto2'] ?>" alt="Image 2" />
+        <img src="/bahoitourismv2/asset/wisata/<?= $data['Foto1'] ?>" alt="Image 1" class="horizontal" />
+        <img src="/bahoitourismv2/asset/wisata/<?= $data['Foto2'] ?>" alt="Image 2" />
         <div class="vertical">
-          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto3'] ?>" alt="Image 3" />
-          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto4'] ?>" alt="Image 4" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data['Foto3'] ?>" alt="Image 3" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data['Foto4'] ?>" alt="Image 4" />
         </div>
         <div class="vertical">
-          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto5'] ?>" alt="Image 5" />
-          <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto6'] ?>" alt="Image 6" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data['Foto5'] ?>" alt="Image 5" />
+          <img src="/bahoitourismv2/asset/wisata/<?= $data['Foto6'] ?>" alt="Image 6" />
         </div>
-        <img src="/bahoitourismv2/asset/wisata/<?= $data ['Foto7'] ?>" alt="Image 7" />
+        <img src="/bahoitourismv2/asset/wisata/<?= $data['Foto7'] ?>" alt="Image 7" />
       </div>
       <div class="tour-info">
         <div class="tour-details">
-          <h2><?= $data ['Tempat'] ?></h2>
+          <h2><?= $data['Tempat'] ?></h2>
           <div class="rating">
-          <span class="stars">
-                    <?php
-                    for ($i = 1; $i <= 5; $i++) {
-                        if ($i <= $starsRating) {
-                            echo '<span class="star">&#9733;</span>';
-                        } else {
-                            echo '<span class="star">&#9734;</span>';
-                        }
-                    }
-                    ?>
-                </span>
-                <span class="rating"><?= $avgdecimal ?>/5 (<?= $datacountuser['countuser'] ?> Review)</span>
+            <span class="stars">
+              <?php
+              for ($i = 1; $i <= 5; $i++) {
+                if ($i <= $starsRating) {
+                  echo '<span class="star">&#9733;</span>';
+                } else {
+                  echo '<span class="star">&#9734;</span>';
+                }
+              }
+              ?>
+            </span>
+            <span class="rating"><?= $avgdecimal ?>/5 (<?= $datacountuser['countuser'] ?> Review)</span>
           </div>
         </div>
         <div class="price">
           <span>Mulai dari <br></span>
-          <span class="price-amount">Rp.<?= $data ['Harga'] ?></span>
+          <span class="price-amount">Rp.<?= $data['Harga'] ?></span>
           <span>/Orang</span>
           <br>
           <button id="cekharga" class="book-now">Lihat Paket</button>
         </div>
       </div>
 
-      <div class="reviews-navigation">
-        <img src="/bahoitourismv2/asset/icon2/BackArrow.png" alt="Previous" class="prev-reviews">
-        <img src="/bahoitourismv2/asset/icon2/NextArrow.png" alt="Next" class="next-reviews">
+      <div id="alertAuth"></div>
+
+      <div class="reviewscomment">
+        <button id="openReviewModal">Tulis review</button>
       </div>
 
-      <div class="reviews">
-        <div class="review">
-          <h4>5,0/5</h4>
-          <div class="stars">★★★★★</div>
-          <p>Wisatanya bagus banget, murah banget tiket masuknya</p>
-          <span class="review-date">30 Mei 2024</span>
-        </div>
-        <div class="review">
-          <h4>5,0/5</h4>
-          <div class="stars">★★★★☆</div>
-          <p>Ada sampah di tempat berteduh yang belum dibersihkan</p>
-          <span class="review-date">01 Juni 2024</span>
-        </div>
-        <div class="review">
-          <h4>5,0/5</h4>
-          <div class="stars">★★★★★</div>
-          <p>Sangat Bagus, pokoknya mah rekomen banget sama temen” sekalian yah</p>
-          <span class="review-date">28 Mei 2024</span>
+      <div id="reviewModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <h2>Tulis Review Anda</h2>
+          <form method="POST" action="">
+            <input type="hidden" name="idhomestay" value="<?php echo htmlspecialchars($data['Id']); ?>">
+
+            <p><?php echo htmlspecialchars($data['Tempat']); ?></p>
+            <label3 for="rating">Rating:</label3>
+            <select id="rating" name="rating" required>
+              <option value="5">5 Bintang</option>
+              <option value="4">4 Bintang</option>
+              <option value="3">3 Bintang</option>
+              <option value="2">2 Bintang</option>
+              <option value="1">1 Bintang</option>
+            </select>
+            <labe3 for="review">Review:</labe3>
+            <textarea id="review" name="review" required></textarea>
+            <button type="submit">Kirim Review</button>
+          </form>
         </div>
       </div>
-    </div>
-  </div>
 
-  <footer>
-    <div class="footer-about">
-      <h3>About Bahoi Tourism</h3>
-      <ul>
-        <li>Cara Memesan</li>
-        <li>Cara Membatalkan</li>
-        <li>Pusat Bantuan</li>
-        <li>Kupon</li>
-        <li>About Us</li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h3>Ikuti Kami di</h3>
-      <ul class="social-icons">
-        <li>
-          <a href="#"><img src="/bahoitourismv2/asset/icon4/facebook.png" alt="Facebook" /> Facebook</a>
-        </li>
-        <li>
-          <a href="#"><img src="/bahoitourismv2/asset/icon4/Instagram.png" alt="Instagram" /> Instagram</a>
-        </li>
-        <li>
-          <a href="#"><img src="/bahoitourismv2/asset/icon4/Telegram.png" alt="Telegram" /> Telegram</a>
-        </li>
-        <li>
-          <a href="#"><img src="/bahoitourismv2/asset/icon4/Whatsapp.png" alt="WhatsApp" /> WhatsApp</a>
-        </li>
-        <li>
-          <a href="#"><img src="/bahoitourismv2/asset/icon4/Yt.png" alt="Youtube" /> Youtube</a>
-        </li>
-        <li>
-          <a href="#"><img src="/bahoitourismv2/asset/icon4/Tiktok.png" alt="Tiktok" /> Tiktok</a>
-        </li>
-      </ul>
-    </div>
-    <div class="footer-qr">
-      <h3>QR code</h3>
-      <img src="/bahoitourismv2/asset/icon4/qrcode.jpeg" alt="Scan untuk terhubung ke grup WhatsApp" />
-      <p>Scan untuk terhubung ke grup WhatsApp</p>
-    </div>
-    <div style="clear: both"></div>
-  </footer>
-
-  <div class="copyright">
-    <p>
-      Hak Cipta © 2024 Bahoi Tourism. Seluruh hak cipta dilindungi undang -
-      undang
-    </p>
-  </div>
-
-  <script src="/bahoitourismv2/js/js.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const cekharga = document.getElementById("cekharga");
-      function showAlert() {
+      <div class="wrapper">
         <?php
-          if (empty($token)){
+        while ($datareview = mysqli_fetch_assoc($resultreview)) {
         ?>
-        alert('Silahkan Login Dahulu')
+          <?php include '../review/review.php'; ?>
         <?php
-          } else {
+        }
         ?>
-        document.location.href ='../../index.php';
-        <?php
+      </div>
+
+      <?php include '../footer/footer.php'; ?>
+
+      <script src="/bahoitourismv2/js/js.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const cekharga = document.getElementById("cekharga");
+
+          function showAlert() {
+            <?php
+            if (empty($token)) {
+            ?>
+              alert('Silahkan Login Dahulu')
+            <?php
+            } else {
+            ?>
+              document.location.href = '../../index.php';
+            <?php
+            }
+            ?>
           }
-        ?>
-      }
-      cekharga.addEventListener("click", showAlert);
-    })
-  </script>
+          cekharga.addEventListener("click", showAlert);
+        })
+      </script>
 </body>
 
 </html>

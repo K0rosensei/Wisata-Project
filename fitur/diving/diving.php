@@ -2,36 +2,7 @@
 include '../../config/session.php';
 include '../../config/getdiving.php';
 include_once '../../config/alert.php';
-
-// Pastikan sesi dimulai
-if (!session_id())
-  session_start();
-
-// Tampilkan pesan flash
-$successMessage = flash('success');
-$errorMessage = flash('error');
-
-if ($successMessage) {
-  echo "<div class='custom-alert' id='successAlert'>
-            <div class='custom-alert-content'>
-                <span class='custom-alert-close' onclick='closeCustomAlert(\"successAlert\")'>&times;</span>
-                <h2>Berhasil!</h2>
-                <p>$successMessage</p>
-                <button onclick='closeCustomAlert(\"successAlert\")'>Oke</button>
-            </div>
-          </div>";
-}
-
-if ($errorMessage) {
-  echo "<div class='custom-alert' id='errorAlert'>
-            <div class='custom-alert-content'>
-                <span class='custom-alert-close' onclick='closeCustomAlert(\"errorAlert\")'>&times;</span>
-                <h2>Gagal!</h2>
-                <p>$errorMessage</p>
-                <button onclick='closeCustomAlert(\"errorAlert\")'>Oke</button>
-            </div>
-          </div>";
-}
+include '../../config/message.php';
 
 ?>
 
@@ -259,33 +230,83 @@ if ($errorMessage) {
 
   <script src="/bahoitourismv2/js/js.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const cekharga = document.getElementById("cekharga");
-      function showAlert() {
+    document.addEventListener("DOMContentLoaded", function() {
         <?php
-        if (empty($token)) {
-          ?>
-          alert('Silahkan Login Dahulu')
-          <?php
+        if (!empty($token)) {
+        ?>
+            const openReviewModal = document.getElementById('openReviewModal');
+            const reviewModal = document.getElementById('reviewModal');
+            const closeBtn = document.getElementsByClassName('close')[0];
+            const reviewForm = document.getElementById('reviewForm');
+
+            openReviewModal.onclick = function() {
+                reviewModal.style.display = "block";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == reviewModal) {
+                    reviewModal.style.display = "none";
+                }
+            }
+        <?php
         } else {
-          ?>
-          document.location.href = '../../index.php';
-          <?php
+            ?>
+                const cekharga = document.getElementById("cekharga");
+                const tulisReview = document.getElementById('openReviewModal');
+                const alertAuth = document.getElementById("alertAuth");
+
+                cekharga.addEventListener("click", showAlert);
+                tulisReview.addEventListener("click", showAlert);
+            <?php
         }
         ?>
-      }
-      cekharga.addEventListener("click", showAlert);
-    })
+        // document.getElementById('reviewForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+
+        //     // Di sini Anda bisa menambahkan kode untuk mengirim form menggunakan AJAX
+        //     // Untuk contoh sederhana, kita hanya akan menutup modal
+        //     closeModal();
+
+        //     // Tampilkan pesan sukses (dalam praktik nyata, ini akan ditampilkan setelah respons AJAX)
+        //     alert('Terima kasih atas review Anda!');
+        // });
+    });
+
+    function showAlert() {
+        const alertAuthHtml = `<div class='custom-alert' id='errorAlertAuth'>
+                                            <div class='custom-alert-content'>
+                                                <span class='custom-alert-close' onclick='closeCustomAlertAuth()'>&times;</span>
+                                                <h2>Gagal!</h2>
+                                                <p>Login Terlebih Dahulu</p>
+                                                <button onclick='closeCustomAlertAuth()'>Oke</button>
+                                            </div>
+                                        </div>`;
+        <?php
+        if (empty($token)) {
+        ?>
+            alertAuth.innerHTML = alertAuthHtml;    
+        <?php
+        }
+        ?>
+    }
+
+    function closeCustomAlertAuth() {
+        document.getElementById('errorAlertAuth').style.display = 'none';
+    }
+
+    function closeModal() {
+        document.getElementById('reviewModal').style.display = 'none';
+    }   
 
     function closeCustomAlert(alertId) {
-      // Mengambil elemen popup berdasarkan ID
-      var alertElement = document.getElementById(alertId);
-      if (alertElement) {
-        // Menyembunyikan elemen popup
-        alertElement.style.display = 'none';
-      }
+        // Mengambil elemen popup berdasarkan ID
+        var alertElement = document.getElementById(alertId);
+        if (alertElement) {
+            // Menyembunyikan elemen popup
+            alertElement.style.display = 'none';
+        }
     }
-  </script>
+</script>
 </body>
 
 </html>

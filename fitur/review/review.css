@@ -1,5 +1,6 @@
 .wrapper {
     display: flex;
+    max-width: 800px;
     width: 100%;
     overflow-x: auto;
     gap: 20px;
@@ -32,6 +33,25 @@
     background-color: #fff;
     border-radius: 16px;
     text-align: center;
+}
+
+.review-header {
+  margin-bottom: 10px;
+}
+
+.review-rating {
+    font-size: 1em;
+    color: #f39c12;
+}
+
+.review-date {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.review-text {
+    font-size: 1em;
+    color: #333;
 }
 
 .card p {

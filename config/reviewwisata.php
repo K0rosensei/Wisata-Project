@@ -1,5 +1,7 @@
 <?php
 include 'config.php';
+include 'getwisata.php';
+include_once 'alert.php';
 
 $queryreview = "SELECT * FROM ratingwisata";
 $resultreview = mysqli_query($conn, $queryreview);
@@ -38,5 +40,67 @@ $avgdecimal = round($dataavarage['avgrating'], 1);
     } else {
         $descavg = "<span class='nothing'>BELUM ADA RATING</span>";
     }
+
+// Fungsi untuk menyimpan review
+function saveReview($conn, $kategoriRating, $username, $rating, $tanggal, $review, $idhomestay) {
+    if ($kategoriRating === "ratinghomestay") {
+        mysqli_query($conn, "INSERT INTO ratinghomestay (Username, Rating, Tanggal, Review, Idhomestay) VALUES ('$username', '$rating', '$tanggal', '$review', '$idhomestay')");
+    } else if ($kategoriRating === "ratingWisata") {
+        mysqli_query($conn, "INSERT INTO ratingwisata (Username, Rating, Tanggal, Review) VALUES ('$username', '$rating', '$tanggal', '$review', '$idhomestay')");
+    }
+}
+
+function checkUsernameInReview($conn, $kategoriRating, $username, $idhomestay) {
+    if ($kategoriRating === "ratinghomestay") {
+        $query = "SELECT * FROM ratinghomestay WHERE Username = '$username' AND Idhomestay = '$idhomestay'";
+    } else if ($kategoriRating === "ratingWisata") {
+        $query = "SELECT * FROM ratingwisata WHERE Username = '$username'";
+    }
+
+    $result = mysqli_query($conn, $query);
+    
+    if (mysqli_num_rows($result) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $rating = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT, ["options" => ["min_range" => 1, "max_range" => 5]]);
+    $review = trim(filter_input(INPUT_POST, 'review', FILTER_SANITIZE_STRING));
+    $idhomestay = filter_input(INPUT_POST, 'idhomestay', FILTER_VALIDATE_INT);
+    // var_dump($rating, $review, $idhomestay);
+    
+    if ($rating && $review) {
+        // Asumsikan bahwa username disimpan dalam sesi setelah login
+        $username = $_SESSION['username'] ?? 'Anonymous';
+        $tanggal = date('Y-m-d');
+
+        // Cek apakah username sudah pernah memberikan review
+        if (checkUsernameInReview($conn, $kategoriRating = "ratingwisata", $username, $idhomestay = null)) {
+            flash('error', 'Anda sudah memberikan review.');
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit();
+        }
+        
+        try {
+            $insert = saveReview($conn, $kategoriRating = "ratingwisata", $username, $rating, $tanggal, $review, $idhomestay = null);
+            if (!$insert) {
+                flash('success', 'Terima kasih atas review Anda!');
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit();
+            } else {
+                flash('error', 'Terjadi kesalahan saat menyimpan review.');
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit();
+            }
+        } catch (PDOException $e) {
+            $errorMessage = "Terjadi kesalahan database: " . $e->getMessage();
+        }
+    } else {
+        flash('error', 'Semua field harus diisi dengan benar.');
+    }
+}
 
 ?>

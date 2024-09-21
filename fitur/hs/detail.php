@@ -3,18 +3,19 @@ include '../../config/session.php';
 include '../../config/getdatahs.php';
 include '../../config/reviewhs.php';
 include_once '../../config/alert.php';
+include '../../config/message.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homestay Jein</title>
+    <title>Homestay</title>
     <link rel="stylesheet" href="list/hs.css" />
     <link rel="stylesheet" href="../review/review.css">
     <link rel="stylesheet" href="/bahoitourismv2/css/popup.css" />
+    <link rel="stylesheet" href="/bahoitourismv2/css/alert.css" />
 </head>
 <header>
     <nav>
@@ -156,6 +157,8 @@ include_once '../../config/alert.php';
         </p>
     </div>
 
+    <div id="alertAuth"></div>
+
     <div class="reviewscomment">
         <button id="openReviewModal">Tulis review</button>
     </div>
@@ -165,9 +168,9 @@ include_once '../../config/alert.php';
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Tulis Review Anda</h2>
             <form method="POST" action="">
-                <input type="hidden" name="idhomestay" value="<?php echo htmlspecialchars($homestayData['id']); ?>">
+                <input type="hidden" name="idhomestay" value="<?php echo htmlspecialchars($data['Id']); ?>">
 
-                <p><?php echo htmlspecialchars($homestayData['nama']); ?></p>
+                <p><?php echo htmlspecialchars($data['Nama']); ?></p>
                 <label3 for="rating">Rating:</label3>
                 <select id="rating" name="rating" required>
                     <option value="5">5 Bintang</option>
@@ -182,14 +185,6 @@ include_once '../../config/alert.php';
             </form>
         </div>
     </div>
-
-    <?php if (isset($successMessage)): ?>
-        <div class="success-message"><?php echo htmlspecialchars($successMessage); ?></div>
-    <?php endif; ?>
-
-    <?php if (isset($errorMessage)): ?>
-        <div class="error-message"><?php echo htmlspecialchars($errorMessage); ?></div>
-    <?php endif; ?>
 
     <div class="wrapper">
         <?php
@@ -253,80 +248,81 @@ include_once '../../config/alert.php';
 <script src="/bahoitourismv2/js/js.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const cekharga = document.getElementById("cekharga");
+        <?php
+        if (!empty($token)) {
+        ?>
+            const openReviewModal = document.getElementById('openReviewModal');
+            const reviewModal = document.getElementById('reviewModal');
+            const closeBtn = document.getElementsByClassName('close')[0];
+            const reviewForm = document.getElementById('reviewForm');
 
-        function showAlert() {
-            <?php
-            if (empty($token)) {
-            ?>
-                alert('Silahkan Login Dahulu')
-            <?php
-            } else {
-            ?>
-                document.location.href = '../../../index.php';
-            <?php
+            openReviewModal.onclick = function() {
+                reviewModal.style.display = "block";
             }
+
+            window.onclick = function(event) {
+                if (event.target == reviewModal) {
+                    reviewModal.style.display = "none";
+                }
+            }
+        <?php
+        } else {
             ?>
+                const cekharga = document.getElementById("cekharga");
+                const tulisReview = document.getElementById('openReviewModal');
+                const alertAuth = document.getElementById("alertAuth");
+
+                cekharga.addEventListener("click", showAlert);
+                tulisReview.addEventListener("click", showAlert);
+            <?php
         }
-        cekharga.addEventListener("click", showAlert);
-    })
-</script>
-<script>
-    const openReviewModal = document.getElementById('openReviewModal');
-    const reviewModal = document.getElementById('reviewModal');
-    const closeBtn = document.getElementsByClassName('close')[0];
-    const reviewForm = document.getElementById('reviewForm');
+        ?>
+        // document.getElementById('reviewForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
 
-    openReviewModal.onclick = function() {
-        reviewModal.style.display = "block";
-    }
+        //     // Di sini Anda bisa menambahkan kode untuk mengirim form menggunakan AJAX
+        //     // Untuk contoh sederhana, kita hanya akan menutup modal
+        //     closeModal();
 
-    closeBtn.onclick = function() {
-        reviewModal.style.display = "none";
-    }
+        //     // Tampilkan pesan sukses (dalam praktik nyata, ini akan ditampilkan setelah respons AJAX)
+        //     alert('Terima kasih atas review Anda!');
+        // });
+    });
 
-    window.onclick = function(event) {
-        if (event.target == reviewModal) {
-            reviewModal.style.display = "none";
+    function showAlert() {
+        const alertAuthHtml = `<div class='custom-alert' id='errorAlertAuth'>
+                                            <div class='custom-alert-content'>
+                                                <span class='custom-alert-close' onclick='closeCustomAlertAuth()'>&times;</span>
+                                                <h2>Gagal!</h2>
+                                                <p>Login Terlebih Dahulu</p>
+                                                <button onclick='closeCustomAlertAuth()'>Oke</button>
+                                            </div>
+                                        </div>`;
+        <?php
+        if (empty($token)) {
+        ?>
+            alertAuth.innerHTML = alertAuthHtml;    
+        <?php
         }
+        ?>
     }
 
-    // reviewForm.onsubmit = function(e) {
-    //     e.preventDefault();
-    //     const name = document.getElementById('name').value;
-    //     const rating = document.getElementById('rating').value;
-    //     const review = document.getElementById('review').value;
+    function closeCustomAlertAuth() {
+        document.getElementById('errorAlertAuth').style.display = 'none';
+    }
 
-    //     // Di sini Anda bisa menambahkan logika untuk mengirim data ke server
-    //     console.log('Review submitted:', {
-    //         name,
-    //         rating,
-    //         review
-    //     });
-
-    //     // Reset form dan tutup modal
-    //     reviewForm.reset();
-    //     reviewModal.style.display = "none";
-
-    //     // Tampilkan pesan sukses (opsional)
-    //     alert('Terima kasih atas review Anda!');
-    // }
-</script>
-<script>
     function closeModal() {
         document.getElementById('reviewModal').style.display = 'none';
+    }   
+
+    function closeCustomAlert(alertId) {
+        // Mengambil elemen popup berdasarkan ID
+        var alertElement = document.getElementById(alertId);
+        if (alertElement) {
+            // Menyembunyikan elemen popup
+            alertElement.style.display = 'none';
+        }
     }
-
-    document.getElementById('reviewForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Di sini Anda bisa menambahkan kode untuk mengirim form menggunakan AJAX
-        // Untuk contoh sederhana, kita hanya akan menutup modal
-        closeModal();
-
-        // Tampilkan pesan sukses (dalam praktik nyata, ini akan ditampilkan setelah respons AJAX)
-        alert('Terima kasih atas review Anda!');
-    });
 </script>
 </body>
 
