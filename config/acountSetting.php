@@ -69,6 +69,19 @@ function emailUpdate($email, $username)
         return 'Gagal: ' . mysqli_error($conn);
     }
 }
+function delete($id)
+{
+    global $conn;
+
+    $update = "DELETE FROM user WHERE Id = '$id'";
+    $query = mysqli_query($conn, $update);
+    if ($query) {
+        return 'Berhasil';
+    } else {
+        return 'Gagal: ' . mysqli_error($conn);
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     $name = $_POST['name'];
     $result = updateName($name, $username);
@@ -92,5 +105,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['number'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
     $email = $_POST['email'];
     $result = emailUpdate($email, $username);
+    echo $result; // Kirim respons kembali ke klien
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $id = $_POST['id'];
+    $result = delete($id);
     echo $result; // Kirim respons kembali ke klien
 }

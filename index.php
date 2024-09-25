@@ -20,7 +20,7 @@ if (!empty($username)) {
     <header>
         <nav>
             <ul>
-                <li class="logo"><img src="asset/icon1/Logo1.png" alt="Logo" /></li>
+                <li class="logo"><a href="fitur/admin/login.php"><img src="asset/icon1/Logo1.png" alt="Logo" /></a></li>
                 <li class="name"><a href="index.php">Bahoi Tourism</a></li>
                 <li class="spacer"></li>
                 <li class="center"><a href="index.php">Beranda</a></li>
@@ -66,6 +66,7 @@ if (!empty($username)) {
                     </div>
                     <div class="input-group">
                         <input type="password" name="password" id="loginPassword" required />
+                        <input type="hidden" name="role" id="role" value="user" required />
                         <label for="loginPassword">Password</label>
                         <img src="asset/icon2/Lock.png" alt="Lock Icon" class="input-icon" />
                     </div>
@@ -100,6 +101,7 @@ if (!empty($username)) {
                     </div>
                     <div class="input-group">
                         <input type="password" id="registerPassword" name="registerPassword" required />
+                        <input type="hidden" id="role" name="role" value="user" required />
                         <label for="registerPassword">Password</label>
                         <img src="asset/icon2/Lock.png" alt="Lock Icon" class="input-icon" />
                     </div>

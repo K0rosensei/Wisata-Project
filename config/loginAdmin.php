@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    if ($role !== 'user') {
+    if ($role !== 'admin') {
         die('Invalid role');
     }
 
@@ -35,17 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['token'] = $token;
             $_SESSION['username'] = $row['Username'];
             $_SESSION['id'] = $row['Id'];
-?>
-            <script>
-                window.history.back();
-            </script>
-        <?php
+            header("Location: ../fitur/admin/admin.php");
             // Kirim respons JSON
             echo json_encode(['token' => $token, 'username' => $row['Username']]);
         } else {
             // Password tidak cocok
             // echo json_encode(['error' => 'Invalid email or password']);
-        ?>
+?>
             <script>
                 alert('Invalid email or password')
                 window.history.back();

@@ -7,7 +7,7 @@ $foto2 = $data['Foto2'];
 $foto3 = $data['Foto3'];
 include '../../config/readaccount.php';
 $fullname = $data['Fullname'];
-
+require_once '../../config/payment.php';
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +20,9 @@ $fullname = $data['Fullname'];
     <link rel="stylesheet" href="list/hs.css" />
     <link rel="stylesheet" href="/bahoitourismv2/css/popup.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://app.sandbox.midtrans.com/snap/v2/transactions"></script>
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="<?= \Midtrans\Config::$clientKey ?>"></script>
 </head>
 <header>
     <nav>
@@ -156,6 +159,8 @@ $fullname = $data['Fullname'];
                 /Orang/Malam
             </p>
             <input type="hidden" id="id-product" value="<?= $data['Id'] ?>">
+            <!-- <input type="hidden" id="harga" value="<?= $data['Harga'] ?>"> -->
+            <input type="hidden" id="harga" value="150000">
             <button id="cekharga" class="btn">Lihat Paket</button>
         </div>
     </div>
@@ -326,10 +331,8 @@ $fullname = $data['Fullname'];
 </div>
 
 <script src="/bahoitourismv2/js/js.js"></script>
-<script src="../../js/paymentSeting.js"></script>
+<script src="../../js/paymentSetting.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/v1/transactions"
-    data-client-key="SET_YOUR_CLIENT_KEY_HERE"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const cekharga = document.getElementById("cekharga");

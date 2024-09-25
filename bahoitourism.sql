@@ -84,7 +84,7 @@ CREATE TABLE `homestay` (
   `Fasilitas` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
+--bahoitourismv2
 -- Dumping data for table `homestay`
 --
 
@@ -309,7 +309,8 @@ ALTER TABLE `cekpesan`
 ALTER TABLE `user`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
-
+bahoitourismv2bahoitourismv2
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+bahoitourismv2

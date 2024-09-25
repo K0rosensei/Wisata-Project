@@ -1,6 +1,9 @@
-function calculateTotalPrice(quantityPerNight, quantityPerPerson) {
+// ====================HOME STAY PAYMENT===========================================
+
+function calculateTotalPrice(price, quantityPerNight, quantityPerPerson) {
   // Biaya dasar per malam untuk 2 orang
-  const baseCostPerNight = 150000; // 150K dalam bentuk angka
+  const baseCostPerNight = 150000;
+  // const baseCostPerNight = price;
   // Biaya tambahan per orang di atas 2 orang
   const additionalCostPerPerson = 20000; // 20K dalam bentuk angka
 
@@ -25,7 +28,7 @@ function showAlert(icon, title, text, reload = false) {
   });
 }
 
-function fetchPayment(id_user, price, id_product, quantityPerNight, quantityPerPerson, name) {
+function fetchPayment(name, price, transaksiId) {
   Swal.fire({
     title: 'Konfirmasi Pembayaran',
     text: `Anda Ingin Booking ${name} dengan jumlah ${price}?`,
@@ -35,30 +38,19 @@ function fetchPayment(id_user, price, id_product, quantityPerNight, quantityPerP
     cancelButtonText: 'Batal',
   }).then((result) => {
     if (result.isConfirmed) {
-      console.log(`USER ID: ${id_user}`);
-      console.log(`ID_HomeStay: ${id_product}`);
-      console.log(`Nama HomeStay: ${name}`);
-      console.log(`Kuantitas per Malam: ${quantityPerNight}`);
-      console.log(`Kuantitas per Orang: ${quantityPerPerson}`);
-      console.log(`Total Harga: ${price}`);
-      // Simpan email baru ke database
       return fetch('../../config/payment.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          id_user: id_user,
-          id_product: id_product, // Pastikan variabel user didefinisikan sebelumnya
-          nama: name,
-          quantityPerPerson: quantityPerPerson,
-          quantityPerNight: quantityPerNight,
-          totalPrice: price,
+          transaksiId: transaksiId,
+          total: price,
         }),
       })
-        .then((response) => response.text())
-        .then((responseText) => {
-          window.location.href = responseText;
+        .then((response) => response.json())
+        .then((data) => {
+          window.snap.pay(data.token);
         })
         .catch((error) => {
           Swal.fire('Gagal!', 'Terjadi kesalahan: ' + error.message, 'error');
@@ -67,10 +59,37 @@ function fetchPayment(id_user, price, id_product, quantityPerNight, quantityPerP
   });
 }
 
+function sendToDB(id_user, price, id_product, quantityPerNight, quantityPerPerson, name) {
+  return fetch('../../config/payment.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      id_user: id_user,
+      id_product: id_product, // Pastikan variabel user didefinisikan sebelumnya
+      nama: name,
+      quantityPerPerson: quantityPerPerson,
+      quantityPerNight: quantityPerNight,
+      totalPrice: price,
+    }),
+  })
+    .then((response) => response.json())
+    .then((responseText) => {
+      const { transaksiId, total, name } = responseText;
+      // console.log(responseText);
+      fetchPayment(name, total, transaksiId);
+    })
+    .catch((error) => {
+      Swal.fire('Gagal!', 'Terjadi kesalahan: ' + error.message, 'error');
+    });
+}
+
 function getPayment() {
   let id_user = document.getElementById('id_user').value;
   let id = document.getElementById('id-product').value;
   let name = document.getElementById('nama').value;
+  let price = document.getElementById('harga').value;
 
   Swal.fire({
     title: `Pembayaran ${name}`, // Menggunakan backticks untuk interpolasi variabel
@@ -93,7 +112,7 @@ function getPayment() {
       }
 
       // Hitung total harga
-      const totalPrice = calculateTotalPrice(quantityPerNight, quantityPerPerson);
+      const totalPrice = calculateTotalPrice(price, quantityPerNight, quantityPerPerson);
 
       return { quantityPerNight, quantityPerPerson, totalPrice, id_product, namaHome, user };
     },
@@ -106,14 +125,7 @@ function getPayment() {
       const quantityPerPerson = result.value.quantityPerPerson;
       const totalPrice = result.value.totalPrice;
 
-      // Lakukan sesuatu dengan nilai-nilai tersebut
-      console.log(`ID_HomeStay: ${id}`);
-      console.log(`Nama HomeStay: ${name}`);
-      console.log(`Kuantitas per Malam: ${quantityPerNight}`);
-      console.log(`Kuantitas per Orang: ${quantityPerPerson}`);
-      console.log(`Total Harga: ${totalPrice}`);
-
-      fetchPayment(user, totalPrice, id, quantityPerNight, quantityPerPerson, name);
+      sendToDB(user, totalPrice, id, quantityPerNight, quantityPerPerson, name);
     }
   });
 }
@@ -165,3 +177,7 @@ function statusPayment(id, status) {
       });
     });
 }
+
+// =========================== END HOMESTAY PAYMENT===============================
+
+// ===============================DIVING PAYMENT=================================
