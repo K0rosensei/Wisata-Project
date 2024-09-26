@@ -28,9 +28,11 @@ function showAlert(icon, title, text, reload = false) {
     icon: icon,
     title: title,
     text: text,
+    showConfirmButton: false,
+    timer: 1500,
   }).then(() => {
-    if (reload) {
-      location.reload(); // Reload halaman setelah alert ditutup
-    }
+    then(() => {
+      window.location.href = 'home.php';
+    });
   });
 }

@@ -4,11 +4,10 @@ $(document).ready(function () {
     e.preventDefault();
 
     let id = $(this).attr('edit-id');
-    console.log({ id });
     $('#modalShow').modal('show');
     $('#modalTittle').html('Edit Homestay');
     $.post(
-      'modal-editWS.php',
+      'modal-editDiving.php',
       {
         id: id,
       },
@@ -32,19 +31,17 @@ $(document).ready(function () {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        $.post('../../../config/wisataEditDelete.php', 'hapus=' + id, function (respon) {
+        $.post('../../../config/diving-edit-delete.php', 'hapus=' + id, function (respon) {
           var pecah = respon.split('|');
-          if (pecah[0] == 'success') {
-            Swal.fire({
-              position: 'center',
-              icon: pecah[0],
-              title: 'Data berhasil Dihapus',
-              showConfirmButton: false,
-              timer: 1500,
-            }).then(() => {
-              window.location.href = 'wisata.php';
-            });
-          }
+          Swal.fire({
+            position: 'center',
+            icon: pecah[0],
+            title: 'Data Berhasil Dihapus',
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            window.location.href = 'home.php';
+          });
         });
       }
     });

@@ -9,7 +9,7 @@ if (isset($_POST['hapus'])) {
     if ($query) {
         echo 'success|Data berhasil dihapus';
     } else {
-        echo 'error|Data gagal dihapus';
+        echo 'error|' . mysqli_error($conn) . '';
     }
 }
 
@@ -57,7 +57,7 @@ if (isset($_POST['tempat'])) {
     if (empty($upfoto7['name'])) {
         $upfoto7['name'] = $foto7; // Assign existing photo3 value
     }
-    print_r($upfoto);
+    // print_r($upfoto);
 
     $status = uploadFile($upfoto);
     if ($status === 'Gagal') {

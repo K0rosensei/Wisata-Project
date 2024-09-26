@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['token'] = $token;
             $_SESSION['username'] = $row['Username'];
             $_SESSION['id'] = $row['Id'];
+            $_SESSION['role'] = $row['Role'];
             header("Location: ../fitur/admin/admin.php");
             // Kirim respons JSON
             echo json_encode(['token' => $token, 'username' => $row['Username']]);

@@ -80,61 +80,62 @@ if (mysqli_num_rows($query) > 0) {
     </div>
 </form>
 <script>
-$('#form-edit').submit(function(e) {
-    e.preventDefault();
+    $('#form-edit').submit(function(e) {
+        e.preventDefault();
 
-    let formData = new FormData($(this)[0]);
-    // var id = $(this).attr('edit-id');
-    // formData.append('Id', id);
+        let formData = new FormData($(this)[0]);
+        // var id = $(this).attr('edit-id');
+        // formData.append('Id', id);
 
 
-    // Check if any new files are uploaded
-    const existingFiles = {
-        foto: '<?= htmlspecialchars($foto) ?>',
-        foto2: '<?= htmlspecialchars($foto2) ?>',
-        foto3: '<?= htmlspecialchars($foto3) ?>',
-        foto4: '<?= htmlspecialchars($foto4) ?>',
-        foto5: '<?= htmlspecialchars($foto5) ?>',
-        foto6: '<?= htmlspecialchars($foto6) ?>',
-        foto7: '<?= htmlspecialchars($foto7) ?>'
-    };
+        // Check if any new files are uploaded
+        const existingFiles = {
+            foto: '<?= htmlspecialchars($foto) ?>',
+            foto2: '<?= htmlspecialchars($foto2) ?>',
+            foto3: '<?= htmlspecialchars($foto3) ?>',
+            foto4: '<?= htmlspecialchars($foto4) ?>',
+            foto5: '<?= htmlspecialchars($foto5) ?>',
+            foto6: '<?= htmlspecialchars($foto6) ?>',
+            foto7: '<?= htmlspecialchars($foto7) ?>'
+        };
 
-    // Check if files are uploaded, if not, append existing filenames
-    formData.append('foto', existingFiles.foto);
-    formData.append('foto2', existingFiles.foto2);
-    formData.append('foto3', existingFiles.foto3);
-    formData.append('foto4', existingFiles.foto4);
-    formData.append('foto5', existingFiles.foto5);
-    formData.append('foto6', existingFiles.foto6);
-    formData.append('foto7', existingFiles.foto7);
+        // Check if files are uploaded, if not, append existing filenames
+        formData.append('foto', existingFiles.foto);
+        formData.append('foto2', existingFiles.foto2);
+        formData.append('foto3', existingFiles.foto3);
+        formData.append('foto4', existingFiles.foto4);
+        formData.append('foto5', existingFiles.foto5);
+        formData.append('foto6', existingFiles.foto6);
+        formData.append('foto7', existingFiles.foto7);
 
-    // Log the form data for debugging
-    for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-    }
-
-    $.ajax({
-        url: '../../../config/wisataEditDelete.php', // Replace with your URL
-        type: 'POST',
-        data: formData,
-        processData: false, // Do not process data
-        contentType: false, // Let jQuery set the Content-Type
-        success: function(response) {
-            // Handle response from server
-            var pecah = response.split('|');
-            Swal.fire({
-                position: 'center',
-                icon: pecah[0],
-                title: pecah[1],
-                showConfirmButton: false,
-                timer: 1500,
-            }).then(() => {
-                window.location.href = 'wisata.php';
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error(textStatus, errorThrown);
+        // Log the form data for debugging
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
         }
+
+        $.ajax({
+            url: '../../../config/wisataEditDelete.php', // Replace with your URL
+            type: 'POST',
+            data: formData,
+            processData: false, // Do not process data
+            contentType: false, // Let jQuery set the Content-Type
+            success: function(response) {
+                // Handle response from server
+                console.log(response);
+                var pecah = response.split('|');
+                Swal.fire({
+                    position: 'center',
+                    icon: pecah[0],
+                    title: pecah[1],
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    window.location.href = 'wisata.php';
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error(textStatus, errorThrown);
+            }
+        });
     });
-});
 </script>

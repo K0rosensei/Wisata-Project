@@ -1,15 +1,10 @@
 <?php
-// include '../../config/session.php';
-// if (!empty($username)) {
-//     include '../../config/readaccount.php';
-//     include '../../config/userCRUD.php';
+include '../../../config/session.php';
+if (empty($username) && $_SESSION['role'] === 'admin') {
+    header("Location: ../../../index.php");
+    exit();
+}
 include '../../../config/wisataCRUD.php';
-// include '../../config/wisataCRUD.php';
-// list($dataUser, $totalUser) = readAllUser();
-// } else {
-//     header("Location: ../../index.php");
-//     exit();
-// }
 ?>
 
 
@@ -35,30 +30,7 @@ include '../../../config/wisataCRUD.php';
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
-            </div>
-        </form>
         <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -85,6 +57,10 @@ include '../../../config/wisataCRUD.php';
                                 <a class="nav-link" href="wisata.php">Wisata</a>
                             </nav>
                         </div>
+                        <a class="nav-link" href="../../../config/logout.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Logout
+                        </a>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -120,51 +96,51 @@ include '../../../config/wisataCRUD.php';
                                             <div class="col">
                                                 <label for="tempatWisata" class="form-label">Nama Tempat</label>
                                                 <input name="tempat" type="text" class="form-control" id="tempatWisata"
-                                                    placeholder="Dungaliyo">
+                                                    placeholder="Dungaliyo" required>
                                             </div>
                                             <div class="col">
                                                 <label for="hargaWisata" class="form-label">Harga</label>
                                                 <input name="harga" type="number" class="form-control"
-                                                    id="hargaHomestay" placeholder="20000">
+                                                    id="hargaHomestay" placeholder="20000" required>
                                             </div>
                                             <div class="col">
                                                 <label for="foto1" class="form-label">Foto 1</label>
                                                 <input type="file" name="foto" accept="image/" class="form-control"
-                                                    id="foto1">
+                                                    id="foto1" required>
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
                                             <div class="col">
                                                 <label for="foto2" class="form-label">Foto 2</label>
                                                 <input type="file" name="foto2" accept="image/" class="form-control"
-                                                    id="foto2">
+                                                    id="foto2" required>
                                             </div>
                                             <div class="col">
                                                 <label for="foto3" class="form-label">Foto 3</label>
                                                 <input type="file" name="foto3" accept="image/" class="form-control"
-                                                    id="foto3">
+                                                    id="foto3" required>
                                             </div>
                                             <div class="col">
                                                 <label for="foto4" class="form-label">Foto 4</label>
                                                 <input type="file" name="foto4" accept="image/" class="form-control"
-                                                    id="foto4">
+                                                    id="foto4" required>
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
                                             <div class="col">
                                                 <label for="foto5" class="form-label">Foto 5</label>
                                                 <input type="file" name="foto5" accept="image/" class="form-control"
-                                                    id="foto5">
+                                                    id="foto5" required>
                                             </div>
                                             <div class="col">
                                                 <label for="foto6" class="form-label">Foto 6</label>
                                                 <input type="file" name="foto6" accept="image/" class="form-control"
-                                                    id="foto6">
+                                                    id="foto6" required>
                                             </div>
                                             <div class="col">
                                                 <label for="foto7" class="form-label">Foto 7</label>
                                                 <input type="file" name="foto7" accept="image/" class="form-control"
-                                                    id="foto7">
+                                                    id="foto7" required>
                                             </div>
                                         </div>
 
@@ -203,18 +179,18 @@ include '../../../config/wisataCRUD.php';
                                     <?php
                                     while ($wisataData = mysqli_fetch_assoc($queryWisata)) {
                                     ?>
-                                    <tr>
-                                        <td><?= $wisataData['Tempat'] ?></td>
-                                        <td><?= $wisataData['Harga'] ?></td>
-                                        <td><?= $wisataData['Foto1'] ?></td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-outline-success edit"
-                                                edit-id="<?= $wisataData['Id'] ?>">Edit</button>
-                                            <button type=" button" class="btn btn-outline-danger delete"
-                                                delete-id="<?= $wisataData['Id'] ?>">Hapus</button>
-                                        </td>
-                                    </tr>
-                                    </tr>
+                                        <tr>
+                                            <td><?= $wisataData['Tempat'] ?></td>
+                                            <td><?= $wisataData['Harga'] ?></td>
+                                            <td><?= $wisataData['Foto1'] ?></td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-outline-success edit"
+                                                    edit-id="<?= $wisataData['Id'] ?>">Edit</button>
+                                                <button type=" button" class="btn btn-outline-danger delete"
+                                                    delete-id="<?= $wisataData['Id'] ?>">Hapus</button>
+                                            </td>
+                                        </tr>
+                                        </tr>
                                     <?php
                                     }
                                     ?>
@@ -265,15 +241,12 @@ include '../../../config/wisataCRUD.php';
     <script src="../js/button.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="../assets/demo/chart-area-demo.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="../assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="../js/datatables-simple-demo.js"></script>
     <script src="../js/delete-wisata.js"></script>
-    <script src="../js/add-wisata.js"></script>
 
 </body>
 

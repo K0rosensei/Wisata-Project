@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!-- Created By CodingNepal -->
-<html lang="en" dir="ltr">
+<html>
 
 <head>
     <meta charset="utf-8">
-    <title>Login Form Design | CodeLab</title>
+    <title>Login Admin | BahoiTourism</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
 </head>

@@ -1,5 +1,10 @@
 <?php
-
+include '../../../config/session.php';
+if (empty($username) && $_SESSION['role'] === 'admin') {
+    header("Location: ../../../index.php");
+    exit();
+}
+include '../../../config/divingCRUD.php';
 include '../../../config/getallhs.php';
 
 ?>
@@ -27,30 +32,6 @@ include '../../../config/getallhs.php';
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
-            </div>
-        </form>
-        <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -72,11 +53,15 @@ include '../../../config/getallhs.php';
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="#" id="homestay">Home Stay</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Diving</a>
+                                <a class="nav-link" href="home.php" id="homestay">Home Stay</a>
+                                <a class="nav-link" href="diving.php">Diving</a>
                                 <a class="nav-link" href="wisata.php">Wisata</a>
                             </nav>
                         </div>
+                        <a class="nav-link" href="../../../config/logout.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Logout
+                        </a>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -112,64 +97,65 @@ include '../../../config/getallhs.php';
                                             <div class="col">
                                                 <label for="nameHomestay" class="form-label">Nama Homestay</label>
                                                 <input name="nama" type="text" class="form-control" id="nameHomestay"
-                                                    placeholder="garuda">
+                                                    placeholder="garuda" required>
                                             </div>
                                             <div class="col">
                                                 <label for="hargaHomestay" class="form-label">Harga</label>
                                                 <input name="harga" type="number" class="form-control"
-                                                    id="hargaHomestay" placeholder="20000">
+                                                    id="hargaHomestay" placeholder="20000" required>
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
                                             <div class="col">
                                                 <label for="kapasitas" class="form-label">Kapasitas</label>
                                                 <input name="kapasitas" type="number" class="form-control"
-                                                    id="kapasitas" placeholder="2..">
+                                                    id="kapasitas" placeholder="2.." required>
                                             </div>
                                             <div class="col">
                                                 <label for="desk" class="form-label">Deskripsi</label>
                                                 <input name="desk" type="text" class="form-control" id="desk"
-                                                    placeholder="deskripsi">
+                                                    placeholder="deskripsi" required>
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
                                             <div class="col">
                                                 <label for="foto1" class="form-label">Foto 1</label>
                                                 <input type="file" name="foto" accept="image/" class="form-control"
-                                                    id="foto1">
+                                                    id="foto1" required>
                                             </div>
                                             <div class="col">
                                                 <label for="foto2" class="form-label">Foto 2</label>
                                                 <input type="file" name="foto2" accept="image/" class="form-control"
-                                                    id="foto2">
+                                                    id="foto2" required>
                                             </div>
                                             <div class="col">
                                                 <label for="foto3" class="form-label">Foto 3</label>
                                                 <input type="file" name="foto3" accept="image/" class="form-control"
-                                                    id="foto3">
+                                                    id="foto3" required>
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
                                             <div class="col">
                                                 <label for="pentik" class="form-label">Pentik</label>
-                                                <textarea class="form-control" name="pentik" id="pentik"
-                                                    rows="2"></textarea>
+                                                <textarea class="form-control" name="pentik" id="pentik" rows="2"
+                                                    required></textarea>
                                             </div>
                                             <div class="col">
                                                 <label for="snk" class="form-label">SnK</label>
-                                                <textarea class="form-control" name="snk" id="snk" rows="2"></textarea>
+                                                <textarea class="form-control" name="snk" id="snk" rows="2"
+                                                    required></textarea>
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
                                             <div class="col">
                                                 <label for="inpo" class="form-label">Info Tambahan</label>
-                                                <textarea class="form-control" name="info_tambahan" id="inpo"
-                                                    rows="2"></textarea>
+                                                <textarea class="form-control" name="info_tambahan" id="inpo" rows="2"
+                                                    required></textarea>
                                             </div>
                                             <div class="col">
                                                 <label for="fasilitas" class="form-label">Fasilitas</label>
-                                                <textarea class="form-control" name="fasilitas" id="fasilitas"
-                                                    rows="2"></textarea>
+                                                <textarea class="form-control" name="fasilitas" id="fasilitas" rows="2"
+                                                    required></textarea>
                                             </div>
                                         </div>
                                         <div class="d-grid mt-2 col-6 mx-auto">
@@ -268,9 +254,7 @@ include '../../../config/getallhs.php';
     <script src="../js/button.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="../assets/demo/chart-area-demo.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="../assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>

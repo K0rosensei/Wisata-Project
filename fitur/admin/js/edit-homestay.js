@@ -36,7 +36,7 @@ $(document).ready(function () {
           Swal.fire({
             position: 'center',
             icon: pecah[0],
-            title: pecah[1],
+            title: 'Data Berhasil Dihapus',
             showConfirmButton: false,
             timer: 1500,
           }).then(() => {

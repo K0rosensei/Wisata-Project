@@ -4,7 +4,7 @@ document.getElementById('form').addEventListener('submit', function (event) {
   const formData = new FormData(this);
   formData.append('tambah', 'true');
 
-  fetch('../../../config/wisataCreate.php', {
+  fetch('../../../config/divingCreate.php', {
     method: 'POST',
     body: formData,
   })
@@ -19,7 +19,7 @@ document.getElementById('form').addEventListener('submit', function (event) {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          window.location.href = 'wisata.php';
+          window.location.href = 'diving.php';
         });
       } else {
         alert(data);
